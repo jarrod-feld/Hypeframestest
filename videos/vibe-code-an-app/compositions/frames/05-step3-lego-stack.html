@@ -1,0 +1,560 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 5 — Step 3: the LEGO box (tech stack). Everything the runtime needs lives inside <template>. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-500.woff2") format("woff2");
+          font-weight: 500;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-800.woff2") format("woff2");
+          font-weight: 800;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-weight: 900;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          src: url("assets/fonts/SpaceGrotesk-600.woff2") format("woff2");
+          font-weight: 600;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          src: url("assets/fonts/SpaceGrotesk-700.woff2") format("woff2");
+          font-weight: 700;
+          font-style: normal;
+        }
+
+        /* Root styled via #root — never a class on the composition root. */
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          font-family: "Inter", sans-serif;
+          color: #000000;
+        }
+        .clip {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* ---- background (full-bleed on its own clip, lowest track) ---- */
+        .f5-bgfield {
+          position: absolute;
+          inset: 0;
+          background: #fffdf5;
+        }
+        .f5-bgdots {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1.5px, transparent 1.6px);
+          background-size: 26px 26px;
+        }
+
+        /* ---- STEP 3 chip (shared step-rail identity: label-pill, top-left) ---- */
+        #f5-chip {
+          position: absolute;
+          left: 60px;
+          top: 48px;
+          background: #f7cb46;
+          border: 6px solid #000;
+          border-radius: 9999px;
+          box-shadow: 8px 8px 0 #000;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 24px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          padding: 12px 28px;
+          z-index: 20;
+          will-change: transform;
+        }
+
+        /* ---- headline block: reveals big center-stage, then compresses up-left ---- */
+        #f5-headwrap {
+          position: absolute;
+          left: 60px;
+          top: 130px;
+          transform-origin: 0 0;
+          will-change: transform;
+          z-index: 8;
+        }
+        #f5-headline {
+          margin: 0;
+          font-weight: 800;
+          font-size: 40px;
+          line-height: 1.05;
+          letter-spacing: -0.01em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .f5-word {
+          display: inline-block;
+          will-change: transform;
+        }
+        #f5-subline {
+          margin-top: 14px;
+          font-weight: 500;
+          font-size: 30px;
+          line-height: 1.3;
+          white-space: nowrap;
+          will-change: transform;
+        }
+        #f5-subline .f5-hl {
+          background: #f7cb46;
+          font-weight: 800;
+          padding: 2px 10px;
+        }
+
+        /* ---- fancy-brick ghost cluster (left margin, dismissed on "don't choose") ---- */
+        #f5-fancy {
+          position: absolute;
+          left: 60px;
+          top: 380px;
+          width: 430px;
+          height: 400px;
+          z-index: 5;
+        }
+        .f5-ghost {
+          position: absolute;
+          background: transparent;
+          border: 6px solid #000;
+          opacity: 0.6;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 26px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          filter: blur(var(--dof, 0px));
+          will-change: filter;
+        }
+
+        /* ---- the four-brick LEGO stack (focal), right-of-center ---- */
+        #f5-stack {
+          position: absolute;
+          left: 1060px;
+          top: 0;
+          width: 580px;
+          height: 100%;
+          z-index: 10;
+        }
+        .f5-brick {
+          position: absolute;
+          left: 0;
+          width: 560px;
+          height: 122px;
+          box-sizing: border-box;
+          border: 8px solid #000;
+          box-shadow: 16px 16px 0 #000;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 30px;
+          will-change: transform;
+        }
+        .f5-tab {
+          position: absolute;
+          top: -26px;
+          width: 64px;
+          height: 26px;
+          box-sizing: border-box;
+          border: 6px solid #000;
+          border-bottom: none;
+        }
+        .f5-tab.t1 { left: 48px; }
+        .f5-tab.t2 { left: 176px; }
+        .f5-tab.t3 { left: 304px; }
+        .f5-tab.t4 { left: 432px; }
+        #f5-brick1 { top: 196px; z-index: 14; background: #fe90e8; }
+        #f5-brick1 .f5-tab { background: #fe90e8; }
+        #f5-brick2 { top: 364px; z-index: 13; background: #c0f7fe; }
+        #f5-brick2 .f5-tab { background: #c0f7fe; }
+        #f5-brick3 { top: 532px; z-index: 12; background: #99e885; }
+        #f5-brick3 .f5-tab { background: #99e885; }
+        #f5-brick4 { top: 700px; z-index: 11; background: #f7cb46; }
+        #f5-brick4 .f5-tab { background: #f7cb46; }
+        .f5-brick-label {
+          font-weight: 800;
+          font-size: 35px;
+          line-height: 1.05;
+          letter-spacing: -0.01em;
+          text-transform: uppercase;
+        }
+        .f5-brick-label.f5-long {
+          font-size: 30px;
+        }
+        .f5-brick-desc {
+          margin-top: 6px;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 1.2;
+        }
+
+        /* ---- "1,000,000+ examples seen" counter card (card-small + stat-deco dot) ---- */
+        #f5-statcard {
+          position: absolute;
+          left: 480px;
+          top: 440px;
+          width: 500px;
+          box-sizing: border-box;
+          padding: 32px 24px 26px;
+          background: #ffffff;
+          border: 6px solid #000;
+          box-shadow: 8px 8px 0 #000;
+          text-align: center;
+          z-index: 12;
+          will-change: transform;
+        }
+        .f5-dot {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          background: #fe90e8;
+          border: 3px solid #000;
+        }
+        #f5-statrow {
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          line-height: 1;
+        }
+        #f5-count {
+          display: inline-block;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 74px;
+          letter-spacing: -0.02em;
+          font-variant-numeric: tabular-nums;
+          transform-origin: center center;
+          will-change: transform;
+        }
+        #f5-plus {
+          display: inline-block;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 58px;
+          margin-left: 8px;
+          transform-origin: center center;
+          will-change: transform;
+        }
+        #f5-statlabel {
+          margin-top: 12px;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 22px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        /* ---- BORING = GOOD star-burst badge (the frame's one earned pop) ---- */
+        #f5-badge {
+          position: absolute;
+          left: 1455px;
+          top: 52px;
+          width: 265px;
+          height: 265px;
+          z-index: 30;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .f5-star-outer,
+        .f5-star-inner {
+          clip-path: polygon(
+            50% 0%, 60.2% 18.6%, 79.4% 9.6%, 76.7% 30.6%, 97.6% 34.5%,
+            83% 50%, 97.6% 65.5%, 76.7% 69.4%, 79.4% 90.4%, 60.2% 81.4%,
+            50% 100%, 39.8% 81.4%, 20.6% 90.4%, 23.3% 69.4%, 2.4% 65.5%,
+            17% 50%, 2.4% 34.5%, 23.3% 30.6%, 20.6% 9.6%, 39.8% 18.6%
+          );
+        }
+        .f5-star-outer {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        .f5-star-inner {
+          position: absolute;
+          inset: 9px;
+          background: #f7cb46;
+        }
+        .f5-badge-text {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-weight: 900;
+          font-size: 28px;
+          line-height: 1.12;
+          letter-spacing: -0.01em;
+          text-transform: uppercase;
+          text-align: center;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="05-step3-lego-stack"
+        data-width="1920"
+        data-height="1080"
+        data-duration="13.995"
+      >
+        <!-- Track 0: full-bleed ground (never on #root) -->
+        <div class="clip" data-start="0" data-duration="13.995" data-track-index="0">
+          <div class="f5-bgfield"></div>
+          <div class="f5-bgdots"></div>
+        </div>
+
+        <!-- Track 1: content -->
+        <div class="clip" data-start="0" data-duration="13.995" data-track-index="1">
+          <div id="f5-chip">Step 3</div>
+
+          <div id="f5-headwrap">
+            <h1 id="f5-headline">
+              <span class="f5-word">THE</span>
+              <span class="f5-word">TECH</span>
+              <span class="f5-word">STACK</span>
+            </h1>
+            <div id="f5-subline">= your box of <span class="f5-hl">LEGO bricks</span></div>
+          </div>
+
+          <div id="f5-fancy">
+            <div class="f5-ghost" data-depth="1" style="--dof: 0px; left: 20px; top: 10px; width: 300px; height: 84px; transform: rotate(-5deg);">The shiny one</div>
+            <div class="f5-ghost" data-depth="2" style="--dof: 0px; left: 70px; top: 142px; width: 340px; height: 84px; transform: rotate(3deg);">The fancy one</div>
+            <div class="f5-ghost" data-depth="3" style="--dof: 0px; left: 10px; top: 276px; width: 390px; height: 84px; transform: rotate(-2deg);">The brand-new one</div>
+          </div>
+
+          <div id="f5-stack">
+            <div class="f5-brick" id="f5-brick1">
+              <span class="f5-tab t1"></span><span class="f5-tab t2"></span><span class="f5-tab t3"></span><span class="f5-tab t4"></span>
+              <div class="f5-brick-label">Screens</div>
+              <div class="f5-brick-desc">what people see</div>
+            </div>
+            <div class="f5-brick" id="f5-brick2">
+              <span class="f5-tab t1"></span><span class="f5-tab t2"></span><span class="f5-tab t3"></span><span class="f5-tab t4"></span>
+              <div class="f5-brick-label">Memory</div>
+              <div class="f5-brick-desc">remembers stuff</div>
+            </div>
+            <div class="f5-brick" id="f5-brick3">
+              <span class="f5-tab t1"></span><span class="f5-tab t2"></span><span class="f5-tab t3"></span><span class="f5-tab t4"></span>
+              <div class="f5-brick-label">Login</div>
+              <div class="f5-brick-desc">knows who's who</div>
+            </div>
+            <div class="f5-brick" id="f5-brick4">
+              <span class="f5-tab t1"></span><span class="f5-tab t2"></span><span class="f5-tab t3"></span><span class="f5-tab t4"></span>
+              <div class="f5-brick-label f5-long">A home on the internet</div>
+            </div>
+          </div>
+
+          <div id="f5-statcard">
+            <span class="f5-dot"></span>
+            <div id="f5-statrow">
+              <span id="f5-count">0</span><span id="f5-plus">+</span>
+            </div>
+            <div id="f5-statlabel">Examples seen</div>
+          </div>
+
+          <div id="f5-badge">
+            <div class="f5-star-outer"></div>
+            <div class="f5-star-inner"></div>
+            <div class="f5-badge-text"><span>Boring</span><span>= good</span></div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        (() => {
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true });
+          const SETTLE = "power3.out";
+
+          /* ============================================================
+             Scene 1 (0.0–2.6) — STEP 3 chip lands in the rail; "THE TECH
+             STACK" reveals per-word center-stage (staged big via the
+             headwrap transform); sub-line arrives on its VO cue.
+             ============================================================ */
+
+          // Chip slides down into the top-left rail slot (long-tail settle).
+          tl.fromTo(
+            "#f5-chip",
+            { y: -110, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.55, ease: SETTLE },
+            0.08
+          );
+
+          // Per-word headline reveal — hero visible well before t=0.5s.
+          gsap.utils.toArray(".f5-word").forEach((el, i) => {
+            tl.fromTo(
+              el,
+              { y: 38, autoAlpha: 0 },
+              { y: 0, autoAlpha: 1, duration: 0.6, ease: SETTLE },
+              0.35 + i * 0.18
+            );
+          });
+
+          // Sub-line "= your box of LEGO bricks" on its cue.
+          tl.fromTo(
+            "#f5-subline",
+            { y: 26, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.55, ease: SETTLE },
+            1.9
+          );
+
+          /* ============================================================
+             Scene 2 (2.6–5.8) — headline compresses up-left into the
+             60/40 layout; the four brick-cards cascade into their slots
+             (center-outward-expansion, short-path into-slot form),
+             one brick per VO beat.
+             ============================================================ */
+
+          // Staged center transform -> resting up-left slot. fromTo with
+          // immediateRender keeps the staged state correct for t < 2.6 under seek.
+          tl.fromTo(
+            "#f5-headwrap",
+            { x: 500, y: 200, scale: 2 },
+            { x: 0, y: 0, scale: 1, duration: 0.8, ease: "power3.inOut" },
+            2.6
+          );
+
+          // Bricks drop a short path directly into their slots — no scatter,
+          // no bounce; smooth long-tail settle. One per beat.
+          const brickAt = [2.75, 3.55, 4.35, 5.15];
+          ["#f5-brick1", "#f5-brick2", "#f5-brick3", "#f5-brick4"].forEach((sel, i) => {
+            tl.fromTo(
+              sel,
+              { y: -80, scale: 0.92, autoAlpha: 0 },
+              { y: 0, scale: 1, autoAlpha: 1, duration: 0.6, ease: SETTLE },
+              brickAt[i]
+            );
+          });
+
+          /* ============================================================
+             Scene 3 (5.8–9.0) — the tempting "fancy brick" outlines fade
+             up at the left margin, then dim + blur away on "don't choose"
+             (depth-of-field-blur: --dof var + opacity dim, depth-scaled);
+             on "boring, popular bricks" the stack snaps its final
+             alignment — one smooth settle chord.
+             ============================================================ */
+
+          tl.fromTo(
+            "#f5-fancy",
+            { autoAlpha: 0 },
+            { autoAlpha: 1, duration: 0.45, ease: "power2.out" },
+            5.5
+          );
+
+          // Depth-scaled defocus — blur derived from data-depth (deterministic).
+          gsap.utils.toArray(".f5-ghost").forEach((el) => {
+            const depth = Number(el.dataset.depth) || 1;
+            tl.to(
+              el,
+              {
+                "--dof": 3 * depth + 2 + "px",
+                opacity: 0.1,
+                duration: 0.85,
+                ease: "power2.inOut",
+              },
+              6.8
+            );
+          });
+
+          // Layout resolve: gaps close so the studs tuck under the brick
+          // above — bricks 2..4 rise in one shared settle window (chord).
+          [1, 2, 3].forEach((i) => {
+            tl.to(
+              "#f5-brick" + (i + 1),
+              { y: -22 * i, duration: 0.55, ease: SETTLE },
+              8.0
+            );
+          });
+
+          /* ============================================================
+             Scene 4 (9.0–12.3) — the counter card lands beside the stack
+             and "1,000,000" counts up with value-scaled growth
+             (counting-dynamic-scale: value + transform scale share one
+             ease); the "+" lands after the count; then the BORING = GOOD
+             star-burst spring-pops at the stack's top corner — the
+             frame's one earned overshoot.
+             ============================================================ */
+
+          tl.fromTo(
+            "#f5-statcard",
+            { y: 30, autoAlpha: 0, rotation: -2 },
+            { y: 0, autoAlpha: 1, rotation: -2, duration: 0.55, ease: SETTLE },
+            9.35
+          );
+
+          const countEl = document.getElementById("f5-count");
+          const fmt = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          const state = { v: 0 };
+          tl.to(
+            state,
+            {
+              v: 1000000,
+              duration: 1.7,
+              ease: SETTLE,
+              onUpdate: () => {
+                countEl.textContent = fmt(state.v);
+              },
+            },
+            9.6
+          );
+          // Value-scaled growth: transform scale shares the count's ease + window.
+          tl.fromTo(
+            "#f5-count",
+            { scale: 0.55 },
+            { scale: 1, duration: 1.7, ease: SETTLE },
+            9.6
+          );
+
+          tl.fromTo(
+            "#f5-statlabel",
+            { y: 14, autoAlpha: 0 },
+            { y: 0, autoAlpha: 1, duration: 0.5, ease: "power2.out" },
+            9.95
+          );
+
+          // "+" suffix gets its own beat after the count lands (smooth, no bounce).
+          tl.fromTo(
+            "#f5-plus",
+            { scale: 0.4, autoAlpha: 0 },
+            { scale: 1, autoAlpha: 1, duration: 0.32, ease: SETTLE },
+            11.32
+          );
+
+          // The one earned pop: star-burst badge, modest overshoot + tilt settle.
+          tl.fromTo(
+            "#f5-badge",
+            { scale: 0, autoAlpha: 0, rotation: -16 },
+            { scale: 1, autoAlpha: 1, rotation: 8, duration: 0.62, ease: "back.out(1.6)" },
+            11.55
+          );
+
+          /* Scene 5 (12.3–14.0) — held read on stack + badge; stillness. */
+
+          window.__timelines["05-step3-lego-stack"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
