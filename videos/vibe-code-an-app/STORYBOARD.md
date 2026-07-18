@@ -256,7 +256,7 @@ keyMessage: First marketing is free: demo the app where your users already gathe
 - duration: 14.379s
 - poster: 10s
 - transition_in: push-slide LEFT
-- status: outline
+- status: animated
 - src: compositions/frames/10-move2-paid-ads.html
 - type: feature_showcase
 - persuasion: Anchoring + coined phrase ("experiments, not vending machines")

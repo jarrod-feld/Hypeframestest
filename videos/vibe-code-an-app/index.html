@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
     <style>
       * {
         margin: 0;
@@ -12,19 +12,23 @@
       }
       html,
       body {
-        margin: 0;
         width: 1920px;
         height: 1080px;
         overflow: hidden;
         background: #000;
       }
-      body {
-        font-family: "Inter", sans-serif;
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #FFFFFF;
       }
-      code,
-      pre,
-      .monospace {
-        font-family: "JetBrains Mono", monospace;
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
       }
     </style>
   </head>
@@ -33,27 +37,405 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="10"
+      data-duration="126.55"
       data-width="1920"
       data-height="1080"
     >
-      
-      
+      <div
+        id="el-01-just-by-talking"
+        class="scene"
+        data-composition-id="01-just-by-talking"
+        data-composition-src="compositions/frames/01-just-by-talking.html"
+        data-start="0"
+        data-duration="7.561"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-01-just-by-talking-voice"
+        src="assets/voice/01.wav"
+        data-start="0"
+        data-duration="7.061"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
 
-      <!--
-        Add your clips here. Example:
-        <div id="title" class="clip" data-start="0" data-duration="5" data-track-index="1"
-             style="font-size: 64px; color: #fff; padding: 40px">
-          Hello World
-        </div>
-      -->
+      <div
+        id="el-02-vibe-coding"
+        class="scene"
+        data-composition-id="02-vibe-coding"
+        data-composition-src="compositions/frames/02-vibe-coding.html"
+        data-start="7.061"
+        data-duration="8.927"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-02-vibe-coding-voice"
+        src="assets/voice/02.wav"
+        data-start="7.061"
+        data-duration="8.427"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-03-step1-tiny-problem"
+        class="scene"
+        data-composition-id="03-step1-tiny-problem"
+        data-composition-src="compositions/frames/03-step1-tiny-problem.html"
+        data-start="15.488"
+        data-duration="11.615"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-03-step1-tiny-problem-voice"
+        src="assets/voice/03.wav"
+        data-start="15.488"
+        data-duration="11.115"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-04-step2-describe"
+        class="scene"
+        data-composition-id="04-step2-describe"
+        data-composition-src="compositions/frames/04-step2-describe.html"
+        data-start="26.603"
+        data-duration="8.713"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-04-step2-describe-voice"
+        src="assets/voice/04.wav"
+        data-start="26.603"
+        data-duration="8.213"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-05-step3-lego-stack"
+        class="scene"
+        data-composition-id="05-step3-lego-stack"
+        data-composition-src="compositions/frames/05-step3-lego-stack.html"
+        data-start="34.816"
+        data-duration="14.495"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-05-step3-lego-stack-voice"
+        src="assets/voice/05.wav"
+        data-start="34.816"
+        data-duration="13.995"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-06-step4-loop"
+        class="scene"
+        data-composition-id="06-step4-loop"
+        data-composition-src="compositions/frames/06-step4-loop.html"
+        data-start="48.811"
+        data-duration="9.865"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-06-step4-loop-voice"
+        src="assets/voice/06.wav"
+        data-start="48.811"
+        data-duration="9.365"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-07-step5-launch"
+        class="scene"
+        data-composition-id="07-step5-launch"
+        data-composition-src="compositions/frames/07-step5-launch.html"
+        data-start="58.176"
+        data-duration="10.304"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-07-step5-launch-voice"
+        src="assets/voice/07.wav"
+        data-start="58.176"
+        data-duration="10.304"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-08-desert"
+        class="scene"
+        data-composition-id="08-desert"
+        data-composition-src="compositions/frames/08-desert.html"
+        data-start="68.48"
+        data-duration="9.14"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-08-desert-voice"
+        src="assets/voice/08.wav"
+        data-start="68.48"
+        data-duration="8.64"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-09-move1-organic"
+        class="scene"
+        data-composition-id="09-move1-organic"
+        data-composition-src="compositions/frames/09-move1-organic.html"
+        data-start="77.12"
+        data-duration="9.396"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-09-move1-organic-voice"
+        src="assets/voice/09.wav"
+        data-start="77.12"
+        data-duration="8.896"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-10-move2-paid-ads"
+        class="scene"
+        data-composition-id="10-move2-paid-ads"
+        data-composition-src="compositions/frames/10-move2-paid-ads.html"
+        data-start="86.016"
+        data-duration="14.879"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-10-move2-paid-ads-voice"
+        src="assets/voice/10.wav"
+        data-start="86.016"
+        data-duration="14.379"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-11-one-number"
+        class="scene"
+        data-composition-id="11-one-number"
+        data-composition-src="compositions/frames/11-one-number.html"
+        data-start="100.39500000000001"
+        data-duration="11.712"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-11-one-number-voice"
+        src="assets/voice/11.wav"
+        data-start="100.39500000000001"
+        data-duration="11.712"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-12-recap"
+        class="scene"
+        data-composition-id="12-recap"
+        data-composition-src="compositions/frames/12-recap.html"
+        data-start="112.10700000000001"
+        data-duration="7.54"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-12-recap-voice"
+        src="assets/voice/12.wav"
+        data-start="112.10700000000001"
+        data-duration="7.04"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-13-your-move"
+        class="scene"
+        data-composition-id="13-your-move"
+        data-composition-src="compositions/frames/13-your-move.html"
+        data-start="119.14700000000002"
+        data-duration="7.403"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-13-your-move-voice"
+        src="assets/voice/13.wav"
+        data-start="119.14700000000002"
+        data-duration="7.403"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- captions -->
+      <div
+        id="el-captions"
+        class="scene"
+        data-composition-id="captions"
+        data-composition-src="compositions/captions.html"
+        data-start="0"
+        data-duration="126.55"
+        data-track-index="2"
+      ></div>
+
+      <!-- SFX -->
+      <audio
+        id="el-sfx-0"
+        src="assets/sfx/whoosh.mp3"
+        data-start="0"
+        data-duration="0.57"
+        data-track-index="20"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-1"
+        src="assets/sfx/pop.mp3"
+        data-start="0"
+        data-duration="0.72"
+        data-track-index="21"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-2"
+        src="assets/sfx/pop.mp3"
+        data-start="7.061"
+        data-duration="0.72"
+        data-track-index="22"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-3"
+        src="assets/sfx/pop.mp3"
+        data-start="15.488"
+        data-duration="0.72"
+        data-track-index="23"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-4"
+        src="assets/sfx/pop.mp3"
+        data-start="34.816"
+        data-duration="0.72"
+        data-track-index="24"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-5"
+        src="assets/sfx/chime.mp3"
+        data-start="34.816"
+        data-duration="2.5"
+        data-track-index="25"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-6"
+        src="assets/sfx/whoosh.mp3"
+        data-start="48.811"
+        data-duration="0.57"
+        data-track-index="26"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-7"
+        src="assets/sfx/click.mp3"
+        data-start="58.176"
+        data-duration="0.37"
+        data-track-index="27"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-8"
+        src="assets/sfx/pop.mp3"
+        data-start="58.176"
+        data-duration="0.72"
+        data-track-index="28"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-9"
+        src="assets/sfx/chime.mp3"
+        data-start="58.176"
+        data-duration="2.5"
+        data-track-index="29"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-10"
+        src="assets/sfx/pop.mp3"
+        data-start="77.12"
+        data-duration="0.72"
+        data-track-index="30"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-11"
+        src="assets/sfx/pop.mp3"
+        data-start="86.016"
+        data-duration="0.72"
+        data-track-index="31"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-12"
+        src="assets/sfx/pop.mp3"
+        data-start="100.395"
+        data-duration="0.72"
+        data-track-index="32"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-13"
+        src="assets/sfx/pop.mp3"
+        data-start="119.147"
+        data-duration="0.72"
+        data-track-index="33"
+        data-volume="0.35"
+      ></audio>
+      <audio
+        id="el-sfx-14"
+        src="assets/sfx/chime.mp3"
+        data-start="119.147"
+        data-duration="2.5"
+        data-track-index="34"
+        data-volume="0.35"
+      ></audio>
     </div>
 
     <script>
       window.__timelines = window.__timelines || {};
-      const tl = gsap.timeline({ paused: true });
-      // Example: tl.from("#title", { opacity: 0, y: -50, duration: 1 }, 0);
-      window.__timelines["main"] = tl;
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+      // ── frame transitions (injected by transitions.mjs) ──
+      (function () { var tl = window.__timelines["main"];
+        tl.to("#el-01-just-by-talking", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 7.061);
+        tl.fromTo("#el-02-vibe-coding", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 7.061);
+        tl.to("#el-02-vibe-coding", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 15.488);
+        tl.fromTo("#el-03-step1-tiny-problem", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 15.488);
+        tl.to("#el-03-step1-tiny-problem", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 26.603);
+        tl.fromTo("#el-04-step2-describe", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 26.603);
+        tl.to("#el-04-step2-describe", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 34.816);
+        tl.fromTo("#el-05-step3-lego-stack", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 34.816);
+        tl.to("#el-05-step3-lego-stack", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 48.811);
+        tl.fromTo("#el-06-step4-loop", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 48.811);
+        tl.to("#el-06-step4-loop", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 58.176);
+        tl.fromTo("#el-07-step5-launch", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 58.176);
+        tl.to("#el-08-desert", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 77.12);
+        tl.fromTo("#el-09-move1-organic", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 77.12);
+        tl.to("#el-09-move1-organic", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 86.016);
+        tl.fromTo("#el-10-move2-paid-ads", { x: 1920, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 86.016);
+        tl.to("#el-10-move2-paid-ads", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 100.395);
+        tl.fromTo("#el-11-one-number", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 100.395);
+        tl.to("#el-12-recap", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 119.147);
+        tl.fromTo("#el-13-your-move", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 119.147);
+        tl.to({}, { duration: 126.55 }, 0); // full-span anchor — main.duration() == composition total (Studio master duration)
+      })();
     </script>
   </body>
 </html>
