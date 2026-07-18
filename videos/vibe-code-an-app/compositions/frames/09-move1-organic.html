@@ -1,0 +1,392 @@
+<template>
+  <div id="root" data-composition-id="09-move1-organic">
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-weight: 500;
+        src: url("assets/fonts/Inter-500.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 800;
+        src: url("assets/fonts/Inter-800.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 900;
+        src: url("assets/fonts/Inter-900.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-weight: 600;
+        src: url("assets/fonts/SpaceGrotesk-600.woff2") format("woff2");
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+
+      /* ---- track 0: full-bleed blue ground (never on #root) ---- */
+      .m1o-bg {
+        position: absolute;
+        inset: 0;
+        background: #c0f7fe;
+      }
+      .m1o-dotgrid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle, #000000 1.5px, transparent 1.6px);
+        background-size: 28px 28px;
+        opacity: 0.06;
+      }
+
+      /* ---- track 1: MOVE 1 rail chip + START FREE ---- */
+      .m1o-header {
+        position: absolute;
+        inset: 0;
+      }
+      .m1o-chip {
+        position: absolute;
+        top: 62px;
+        left: 64px;
+        display: inline-flex;
+        align-items: center;
+        padding: 13px 30px;
+        background: #f7cb46;
+        border: 6px solid #000000;
+        border-radius: 9999px;
+        box-shadow: 8px 8px 0 #000000;
+        font-family: "Space Grotesk";
+        font-weight: 600;
+        font-size: 23px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #000000;
+        white-space: nowrap;
+      }
+      .m1o-heading {
+        position: absolute;
+        top: 150px;
+        left: 66px;
+        font-family: "Inter";
+        font-weight: 800;
+        font-size: 42px;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: #000000;
+        white-space: nowrap;
+      }
+      .m1o-word {
+        display: inline-block;
+        will-change: transform;
+      }
+
+      /* ---- track 2: channel-pill 2x2 brick (center-outward-expansion wrap) ---- */
+      .m1o-pillwrap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 150px;
+        bottom: 250px;
+      }
+      .m1o-pill {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: inline-flex;
+        align-items: center;
+        gap: 24px;
+        height: 112px;
+        padding: 0 44px 0 26px;
+        background: #ffffff;
+        border: 8px solid #000000;
+        border-radius: 9999px;
+        box-shadow: 15px 15px 0 #000000;
+        font-family: "Inter";
+        font-weight: 800;
+        font-size: 35px;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: #000000;
+        white-space: nowrap;
+        will-change: transform;
+      }
+      .m1o-glyph {
+        display: grid;
+        place-items: center;
+        width: 62px;
+        height: 62px;
+        border: 5px solid #000000;
+        flex: none;
+      }
+      .m1o-glyph svg {
+        display: block;
+        width: 34px;
+        height: 34px;
+      }
+      .m1o-glyph-pink { background: #fe90e8; }
+      .m1o-glyph-green { background: #99e885; }
+      .m1o-glyph-yellow { background: #f7cb46; }
+      .m1o-glyph-cream { background: #ffdc8b; }
+
+      /* ---- track 3: the "say" line + scribble strike-through ---- */
+      .m1o-sayclip {
+        position: absolute;
+        inset: 0;
+      }
+      .m1o-say {
+        position: absolute;
+        top: 652px;
+        left: 118px;
+        display: inline-block;
+        will-change: transform;
+      }
+      .m1o-say-text {
+        position: relative;
+        z-index: 1;
+        font-family: "Inter";
+        font-weight: 500;
+        font-style: italic;
+        font-size: 31px;
+        color: #3d3d3d;
+        white-space: nowrap;
+      }
+      .m1o-strike-svg {
+        position: absolute;
+        left: -2%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 104%;
+        height: 22px;
+        z-index: 2;
+        overflow: visible;
+      }
+
+      /* ---- track 4: SHOW banner + star burst ---- */
+      .m1o-bannerclip {
+        position: absolute;
+        inset: 0;
+      }
+      .m1o-banner {
+        position: absolute;
+        left: -40px;
+        right: -40px;
+        top: 728px;
+        height: 126px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fe90e8;
+        border: 8px solid #000000;
+        transform: rotate(-0.8deg);
+        clip-path: inset(0 100% 0 0);
+        font-family: "Inter";
+        font-weight: 900;
+        font-size: 56px;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        color: #000000;
+        white-space: nowrap;
+      }
+      .m1o-star {
+        position: absolute;
+        left: 1508px;
+        top: 664px;
+        width: 128px;
+        height: 128px;
+        will-change: transform;
+      }
+      .m1o-star svg {
+        display: block;
+        width: 128px;
+        height: 128px;
+      }
+    </style>
+
+    <!-- track 0 — ground -->
+    <div class="clip m1o-bg" data-start="0" data-duration="8.896" data-track-index="0">
+      <div class="m1o-dotgrid"></div>
+    </div>
+
+    <!-- track 1 — rail chip + heading -->
+    <div class="clip m1o-header" data-start="0" data-duration="8.896" data-track-index="1">
+      <div class="m1o-chip" id="m1o-chip">Move 1</div>
+      <div class="m1o-heading">
+        <span class="m1o-word" id="m1o-w1">Start</span>
+        <span class="m1o-word" id="m1o-w2">Free</span>
+      </div>
+    </div>
+
+    <!-- track 2 — channel pills, 2x2 brick, one per spoken cue -->
+    <div class="clip m1o-pillwrap" data-start="1.8" data-duration="7.096" data-track-index="2">
+      <div class="m1o-pill" data-target-x="-250" data-target-y="-72" data-rot="-1.6">
+        <span class="m1o-glyph m1o-glyph-pink">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3.5h18v12.5H8.5L3 21z" fill="#000000"/></svg>
+        </span>
+        The group chat
+      </div>
+      <div class="m1o-pill" data-target-x="250" data-target-y="-72" data-rot="1.2">
+        <span class="m1o-glyph m1o-glyph-green">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l8.5 9.5H15.5v9.5h-7V12H3.5z" fill="#000000"/></svg>
+        </span>
+        The subreddit
+      </div>
+      <div class="m1o-pill" data-target-x="-288" data-target-y="72" data-rot="1.4">
+        <span class="m1o-glyph m1o-glyph-yellow">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8.6 2.5h3l-2.2 19h-3zM14.6 2.5h3l-2.2 19h-3z" fill="#000000"/>
+            <path d="M3.5 7.6h17.6v3H3.5zM2.9 13.4h17.6v3H2.9z" fill="#000000"/>
+          </svg>
+        </span>
+        The Discord
+      </div>
+      <div class="m1o-pill" data-target-x="236" data-target-y="72" data-rot="-1.2">
+        <span class="m1o-glyph m1o-glyph-cream">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5l14 8.5-14 8.5z" fill="#000000"/></svg>
+        </span>
+        A short video
+      </div>
+    </div>
+
+    <!-- track 3 — "don't say it" line, struck through on its cue -->
+    <div class="clip m1o-sayclip" data-start="4.9" data-duration="3.996" data-track-index="3">
+      <div class="m1o-say" id="m1o-say">
+        <span class="m1o-say-text" id="m1o-say-text">&ldquo;i made an app :)&rdquo;</span>
+        <svg class="m1o-strike-svg" viewBox="0 0 340 20" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            id="m1o-strike"
+            d="M0,10 Q28,2 56,10 Q84,18 112,10 Q140,2 168,10 Q196,18 224,10 Q252,2 280,10 Q308,18 340,10"
+            fill="none"
+            stroke="#000000"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- track 4 — SHOW banner mask-wipe + the one earned star pop -->
+    <div class="clip m1o-bannerclip" data-start="6.4" data-duration="2.496" data-track-index="4">
+      <div class="m1o-banner" id="m1o-banner">Show it doing the thing</div>
+      <div class="m1o-star" id="m1o-star">
+        <svg viewBox="0 0 128 128" aria-hidden="true">
+          <polygon
+            points="64,6 75,30 98,17 93,43 119,46 100,64 119,82 93,85 98,111 75,98 64,122 53,98 30,111 35,85 9,82 28,64 9,46 35,43 30,17 53,30"
+            fill="#f7cb46"
+            stroke="#000000"
+            stroke-width="6"
+            stroke-linejoin="miter"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        var tl = gsap.timeline({ paused: true });
+
+        /* Scene 1 (0.0-1.9s) — MOVE 1 chip lands in the rail slot; START FREE per-word */
+        tl.fromTo(
+          "#m1o-chip",
+          { x: -70, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.55, ease: "power3.out" },
+          0.08
+        );
+        tl.fromTo(
+          "#m1o-w1",
+          { y: 46, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+          0.95
+        );
+        tl.fromTo(
+          "#m1o-w2",
+          { y: 46, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+          1.3
+        );
+
+        /* Scene 2 (1.9-5.0s) — four channel pills cascade one per spoken cue
+           into the 2x2 brick (center-outward-expansion, short-path form:
+           each starts partway along its center->target path, no burst pile-up) */
+        var START_PROGRESS = 0.4;
+        var EXPAND_DUR = 1.05;
+        var pillTimes = [2.0, 2.75, 3.5, 4.25];
+        var pills = document.querySelectorAll(".m1o-pill");
+        pills.forEach(function (el, i) {
+          var tx = Number(el.dataset.targetX);
+          var ty = Number(el.dataset.targetY);
+          var rot = Number(el.dataset.rot);
+          tl.fromTo(
+            el,
+            {
+              xPercent: -50,
+              yPercent: -50,
+              x: tx * START_PROGRESS,
+              y: ty * START_PROGRESS,
+              scale: 0.62,
+              opacity: 0,
+              rotation: rot * 0.3
+            },
+            {
+              x: tx,
+              y: ty,
+              scale: 1,
+              opacity: 1,
+              rotation: rot,
+              duration: EXPAND_DUR,
+              ease: "power3.out"
+            },
+            pillTimes[i]
+          );
+        });
+
+        /* Scene 3 (5.0-7.7s) — say-line appears, scribble strike negates it,
+           then the SHOW banner mask-wipes across the lower third */
+        tl.fromTo(
+          "#m1o-say",
+          { x: -44, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+          5.05
+        );
+
+        var strike = document.querySelector("#m1o-strike");
+        var strikeLen = strike.getTotalLength();
+        gsap.set(strike, { strokeDasharray: strikeLen, strokeDashoffset: strikeLen });
+        tl.to(
+          strike,
+          { strokeDashoffset: 0, duration: 0.55, ease: "power1.inOut" },
+          5.85
+        );
+        tl.to(
+          "#m1o-say-text",
+          { opacity: 0.45, duration: 0.4, ease: "power2.out" },
+          5.95
+        );
+
+        tl.to(
+          "#m1o-banner",
+          { clipPath: "inset(0 0% 0 0)", duration: 0.8, ease: "power3.out" },
+          6.55
+        );
+
+        /* The frame's one earned pop — star burst beside the banner on "Show it." */
+        tl.fromTo(
+          "#m1o-star",
+          { scale: 0, rotation: -25, opacity: 0, transformOrigin: "50% 50%" },
+          { scale: 1, rotation: 8, opacity: 1, duration: 0.5, ease: "back.out(2)" },
+          7.4
+        );
+
+        /* Scene 4 (7.7-8.9s) — held read, stillness */
+
+        window.__timelines["09-move1-organic"] = tl;
+      })();
+    </script>
+  </div>
+</template>

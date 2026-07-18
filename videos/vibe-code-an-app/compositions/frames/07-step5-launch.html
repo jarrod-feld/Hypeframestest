@@ -1,0 +1,604 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 7 — Step 5: launch. Everything the runtime needs lives inside <template>. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-800.woff2") format("woff2");
+          font-weight: 800;
+          font-display: block;
+        }
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-weight: 900;
+          font-display: block;
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          src: url("assets/fonts/SpaceGrotesk-600.woff2") format("woff2");
+          font-weight: 600;
+          font-display: block;
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          src: url("assets/fonts/SpaceGrotesk-700.woff2") format("woff2");
+          font-weight: 700;
+          font-display: block;
+        }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          font-family: "Inter", sans-serif;
+        }
+
+        /* ---- background layer (full-bleed ground on a clip, never #root) ---- */
+        .l7-bg {
+          position: absolute;
+          inset: 0;
+          background-color: #99e885;
+          background-image: radial-gradient(rgba(0, 0, 0, 0.13) 2.2px, transparent 2.2px);
+          background-size: 34px 34px;
+        }
+        .l7-stripe {
+          position: absolute;
+          right: 74px;
+          top: 66px;
+          width: 220px;
+          height: 64px;
+          background-image: repeating-linear-gradient(
+            45deg,
+            #000 0,
+            #000 14px,
+            #f7cb46 14px,
+            #f7cb46 28px
+          );
+          border: 6px solid #000;
+          box-shadow: 8px 8px 0 #000;
+          transform: rotate(-7deg);
+        }
+
+        /* ---- content layer ---- */
+        .l7-stage {
+          position: absolute;
+          inset: 0;
+        }
+
+        .l7-chip {
+          position: absolute;
+          left: 64px;
+          top: 56px;
+          display: inline-flex;
+          align-items: center;
+          padding: 14px 30px;
+          background: #f7cb46;
+          border: 6px solid #000;
+          border-radius: 9999px;
+          box-shadow: 8px 8px 0 #000;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 26px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #000;
+          will-change: transform, opacity;
+        }
+
+        .l7-title {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 84px;
+          text-align: center;
+          font-weight: 800;
+          font-size: 46px;
+          letter-spacing: -0.01em;
+          text-transform: uppercase;
+          color: #000;
+          will-change: transform, opacity;
+        }
+
+        /* ---- morph stage: three states share one screen center (960, 480) ---- */
+        .l7-mstate {
+          position: absolute;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        /* State A — the little app card */
+        #launch7-appcard {
+          left: 800px;
+          top: 355px;
+          width: 320px;
+          height: 250px;
+          z-index: 1;
+        }
+        .l7-appcard-inner {
+          width: 100%;
+          height: 100%;
+          background: #fff;
+          border: 8px solid #000;
+          box-shadow: 14px 14px 0 #000;
+          display: flex;
+          flex-direction: column;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .l7-appcard-head {
+          height: 46px;
+          background: #fe90e8;
+          border-bottom: 6px solid #000;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 0 12px;
+        }
+        .l7-appcard-dotsq {
+          width: 14px;
+          height: 14px;
+          background: #fffdf5;
+          border: 3px solid #000;
+        }
+        .l7-appcard-body {
+          flex: 1;
+          padding: 16px 18px 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .l7-appcard-line {
+          height: 12px;
+          background: #000;
+          opacity: 0.18;
+        }
+        .l7-appcard-line.short {
+          width: 60%;
+        }
+        .l7-appcard-block {
+          width: 64px;
+          height: 34px;
+          background: #f7cb46;
+          border: 4px solid #000;
+        }
+        .l7-appcard-label {
+          margin-top: auto;
+          padding-bottom: 8px;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 19px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #000;
+          text-align: center;
+        }
+
+        /* State B — the DEPLOY button */
+        #launch7-btn {
+          left: 650px;
+          top: 395px;
+          width: 620px;
+          height: 170px;
+          z-index: 2;
+          background: #f7cb46;
+          border: 8px solid #000;
+          box-shadow: 14px 14px 0 #000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 900;
+          font-size: 88px;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #000;
+        }
+
+        /* State C — the live link pill */
+        #launch7-link {
+          left: 540px;
+          top: 405px;
+          width: 840px;
+          height: 150px;
+          z-index: 3;
+          background: #fffdf5;
+          border: 8px solid #000;
+          border-radius: 9999px;
+          box-shadow: 14px 14px 0 #000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 26px;
+        }
+        .l7-link-url {
+          font-weight: 800;
+          font-size: 54px;
+          letter-spacing: -0.01em;
+          color: #000;
+        }
+        .l7-link-dot {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #99e885;
+          border: 4px solid #000;
+        }
+        .l7-link-live {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 30px;
+          letter-spacing: 0.08em;
+          color: #000;
+        }
+
+        /* underline flourish beneath the link pill */
+        .l7-underline {
+          position: absolute;
+          left: 680px;
+          top: 578px;
+          width: 560px;
+          height: 26px;
+          z-index: 3;
+        }
+
+        /* ---- globe (the computer that never sleeps) ---- */
+        #launch7-globe {
+          position: absolute;
+          left: 1343px;
+          top: 348px;
+          width: 184px;
+          height: 184px;
+          border-radius: 50%;
+          background: #c0f7fe;
+          border: 7px solid #000;
+          box-shadow: 10px 10px 0 #000;
+          z-index: 4;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+        #launch7-globe svg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+        }
+
+        /* visitor dots around the globe */
+        .launch7-vdot {
+          position: absolute;
+          border-radius: 50%;
+          border: 3px solid #000;
+          z-index: 4;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+        #launch7-vdot-1 {
+          left: 1270px;
+          top: 340px;
+          width: 24px;
+          height: 24px;
+          background: #fe90e8;
+        }
+        #launch7-vdot-2 {
+          left: 1582px;
+          top: 376px;
+          width: 20px;
+          height: 20px;
+          background: #f7cb46;
+        }
+        #launch7-vdot-3 {
+          left: 1287px;
+          top: 535px;
+          width: 26px;
+          height: 26px;
+          background: #fffdf5;
+        }
+        #launch7-vdot-4 {
+          left: 1569px;
+          top: 529px;
+          width: 22px;
+          height: 22px;
+          background: #ffdc8b;
+        }
+
+        /* ---- click feedback ---- */
+        #launch7-ripple {
+          position: absolute;
+          left: 922px;
+          top: 440px;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          border: 6px solid #000;
+          opacity: 0;
+          transform: scale(0);
+          transform-origin: 50% 50%;
+          z-index: 5;
+          pointer-events: none;
+          will-change: transform, opacity;
+        }
+
+        /* ---- cursor (sanctioned interface mock) ---- */
+        #launch7-cursor {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 66px;
+          height: 66px;
+          z-index: 10;
+          pointer-events: none;
+          transform-origin: 0 0; /* arrow tip is the click point */
+          filter: drop-shadow(5px 5px 0 rgba(0, 0, 0, 0.35));
+          will-change: transform;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="07-step5-launch"
+        data-width="1920"
+        data-height="1080"
+        data-duration="10.304"
+      >
+        <!-- Track 0 — full-bleed green ground + BlockFrame decoration -->
+        <div
+          id="launch7-bg"
+          class="clip l7-bg"
+          data-start="0"
+          data-duration="10.304"
+          data-track-index="0"
+        >
+          <div class="l7-stripe"></div>
+        </div>
+
+        <!-- Track 1 — content -->
+        <div
+          id="launch7-stage"
+          class="clip l7-stage"
+          data-start="0"
+          data-duration="10.304"
+          data-track-index="1"
+        >
+          <div id="launch7-chip" class="l7-chip">Step 5</div>
+          <div id="launch7-title" class="l7-title">Launch</div>
+
+          <!-- morph stage: app card -> DEPLOY button -> live link, one shared center -->
+          <div id="launch7-appcard" class="l7-mstate">
+            <div id="launch7-appcard-inner" class="l7-appcard-inner">
+              <div class="l7-appcard-head">
+                <div class="l7-appcard-dotsq"></div>
+                <div class="l7-appcard-dotsq"></div>
+              </div>
+              <div class="l7-appcard-body">
+                <div class="l7-appcard-line"></div>
+                <div class="l7-appcard-line short"></div>
+                <div class="l7-appcard-block"></div>
+                <div class="l7-appcard-label">Your app</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="launch7-btn" class="l7-mstate">Deploy</div>
+
+          <div id="launch7-link" class="l7-mstate">
+            <span class="l7-link-url">myapp.link</span>
+            <span class="l7-link-dot"></span>
+            <span class="l7-link-live">Live</span>
+          </div>
+
+          <!-- scribble underline beneath the link pill -->
+          <svg class="l7-underline" viewBox="0 0 500 24" preserveAspectRatio="none">
+            <path
+              id="launch7-underline-path"
+              d="M0,12 Q31,2 62,12 Q93,22 125,12 Q156,2 187,12 Q218,22 250,12 Q281,2 312,12 Q343,22 375,12 Q406,2 437,12 Q468,22 500,12"
+              fill="none"
+              stroke="#000"
+              stroke-width="5"
+              stroke-linecap="round"
+            />
+          </svg>
+
+          <!-- globe pictogram: closed eyes -> open eyes -->
+          <div id="launch7-globe">
+            <svg viewBox="0 0 170 170">
+              <line x1="4" y1="85" x2="166" y2="85" stroke="#000" stroke-width="3.5" opacity="0.28" />
+              <ellipse cx="85" cy="85" rx="38" ry="82" fill="none" stroke="#000" stroke-width="3.5" opacity="0.28" />
+              <g id="launch7-eyes-closed">
+                <path d="M45 72 Q57 84 69 72" fill="none" stroke="#000" stroke-width="6" stroke-linecap="round" />
+                <path d="M101 72 Q113 84 125 72" fill="none" stroke="#000" stroke-width="6" stroke-linecap="round" />
+              </g>
+              <g id="launch7-eyes-open">
+                <circle cx="57" cy="74" r="8" fill="#000" />
+                <circle cx="113" cy="74" r="8" fill="#000" />
+              </g>
+              <path d="M63 112 Q85 128 107 112" fill="none" stroke="#000" stroke-width="6" stroke-linecap="round" />
+            </svg>
+          </div>
+
+          <!-- visitor dots ("anyone on Earth") -->
+          <div id="launch7-vdot-1" class="launch7-vdot"></div>
+          <div id="launch7-vdot-2" class="launch7-vdot"></div>
+          <div id="launch7-vdot-3" class="launch7-vdot"></div>
+          <div id="launch7-vdot-4" class="launch7-vdot"></div>
+
+          <!-- click ripple -->
+          <div id="launch7-ripple"></div>
+
+          <!-- cursor -->
+          <svg id="launch7-cursor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 2 L21 12 L12 13 L7 22 Z" fill="#000" stroke="#fff" stroke-width="1.5" />
+          </svg>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        /* Cursor rests off-canvas lower-right until its approach. */
+        gsap.set("#launch7-cursor", { x: 2010, y: 760 });
+
+        /* ---------------- Scene 1 (0.0-1.9) — "Step five: launch." ----------------
+           Chip slides into the rail slot; app card rests dead-center with only a
+           faint rotational breath (blueprint: presence phase); LAUNCH stamps on cue. */
+        tl.fromTo(
+          "#launch7-appcard",
+          { scale: 0.72, autoAlpha: 0 },
+          { scale: 1, autoAlpha: 1, duration: 0.5, ease: "power3.out" },
+          0.1
+        );
+        tl.fromTo(
+          "#launch7-chip",
+          { y: -110, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.55, ease: "power3.out" },
+          0.12
+        );
+        /* faint rotational breath — finite keyframes, rock-stable title */
+        tl.to(
+          "#launch7-appcard-inner",
+          {
+            keyframes: [
+              { rotation: 1.2, duration: 0.38, ease: "sine.inOut" },
+              { rotation: -1.2, duration: 0.55, ease: "sine.inOut" },
+              { rotation: 0, duration: 0.45, ease: "sine.inOut" },
+            ],
+          },
+          0.78
+        );
+        tl.fromTo(
+          "#launch7-title",
+          { scale: 1.32, autoAlpha: 0 },
+          { scale: 1, autoAlpha: 1, duration: 0.4, ease: "power3.out" },
+          0.98
+        );
+
+        /* ---------------- Scene 2 (1.9-3.9) — "one click" ----------------
+           scale-swap-transition #1: app card condenses at the same center into the
+           DEPLOY button. Shared transform-origin sells one element transforming.
+           Smooth register (power3.out incoming) per the video's motion law. */
+        tl.to(
+          "#launch7-appcard",
+          { scale: 0.62, autoAlpha: 0, duration: 0.38, ease: "power2.in" },
+          2.05
+        );
+        tl.fromTo(
+          "#launch7-btn",
+          { scale: 0.62, autoAlpha: 0 },
+          { scale: 1, autoAlpha: 1, duration: 0.5, ease: "power3.out" },
+          2.32
+        );
+
+        /* ---------------- Scene 3 (3.9-6.5) — the press ----------------
+           gsap-effects: cursor decel-arrives (power2.out) and lands a few px OFF
+           the button's center (982,500 vs 960,480) so the aim reads human. */
+        tl.to(
+          "#launch7-cursor",
+          { x: 974, y: 495, duration: 1.0, ease: "power2.out" },
+          3.95
+        );
+        /* physics-press-reaction: cursor + button compress in lockstep (one target
+           array), button sinks toward its hard shadow, then both spring back —
+           the release overshoot is this frame's one earned pop. */
+        tl.to(
+          ["#launch7-btn", "#launch7-cursor"],
+          { scale: 0.92, duration: 0.12, ease: "power1.in" },
+          5.02
+        );
+        tl.to(
+          "#launch7-btn",
+          { x: 10, y: 10, boxShadow: "4px 4px 0 #000000", duration: 0.12, ease: "power1.in" },
+          5.02
+        );
+        /* cursor-click-ripple: one ring, attack at the click point, expand + fade.
+           immediateRender:false holds the CSS-hidden state until the click. */
+        tl.set("#launch7-ripple", { opacity: 1 }, 5.1);
+        tl.to(
+          "#launch7-ripple",
+          {
+            scale: 3.1,
+            opacity: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            immediateRender: false,
+          },
+          5.1
+        );
+        tl.to(
+          ["#launch7-btn", "#launch7-cursor"],
+          { scale: 1, duration: 0.5, ease: "back.out(1.8)" },
+          5.26
+        );
+        tl.to(
+          "#launch7-btn",
+          { x: 0, y: 0, boxShadow: "14px 14px 0 #000000", duration: 0.5, ease: "power2.out" },
+          5.26
+        );
+
+        /* "a computer that never sleeps" — globe pops beside the button
+           (spring-pop-entrance, smooth settle), eyes closed... then open. */
+        tl.fromTo(
+          "#launch7-globe",
+          { scale: 0, autoAlpha: 0 },
+          { scale: 1, autoAlpha: 1, duration: 0.55, ease: "power3.out" },
+          5.55
+        );
+        tl.to("#launch7-eyes-closed", { autoAlpha: 0, duration: 0.12, ease: "power1.in" }, 6.15);
+        tl.fromTo(
+          "#launch7-eyes-open",
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.15, ease: "power1.out" },
+          6.18
+        );
+
+        /* cursor drifts clear so the link pill stays legible */
+        tl.to("#launch7-cursor", { x: 1140, y: 648, duration: 0.55, ease: "power2.out" }, 6.3);
+
+        /* ---------------- Scene 4 (6.5-9.1) — the second morph ----------------
+           scale-swap-transition #2: pressed button condenses same-center into the
+           live-link pill — the frame lands on the shipped state. */
+        tl.to(
+          "#launch7-btn",
+          { scale: 0.62, autoAlpha: 0, duration: 0.36, ease: "power2.in" },
+          6.58
+        );
+        tl.fromTo(
+          "#launch7-link",
+          { scale: 0.62, autoAlpha: 0 },
+          { scale: 1, autoAlpha: 1, duration: 0.5, ease: "power3.out" },
+          6.84
+        );
+
+        /* "anyone on Earth" — visitor dots stagger-pop around the globe
+           (gsap-effects stagger, smooth, deterministic index-derived timing) */
+        const l7dots = gsap.utils.toArray(".launch7-vdot");
+        l7dots.forEach((el, i) => {
+          tl.fromTo(
+            el,
+            { scale: 0, autoAlpha: 0 },
+            { scale: 1, autoAlpha: 1, duration: 0.42, ease: "power3.out" },
+            7.55 + i * 0.08
+          );
+        });
+
+        /* ---------------- Scene 5 (9.1-10.3) — "That's deploying." ----------------
+           css-marker-patterns scribble mode: underline self-draws beneath the pill,
+           then the frame holds. No exit — the root transition is the exit. */
+        const l7path = document.getElementById("launch7-underline-path");
+        const l7len = l7path.getTotalLength();
+        gsap.set(l7path, { strokeDasharray: l7len, strokeDashoffset: l7len });
+        tl.to(l7path, { strokeDashoffset: 0, duration: 0.65, ease: "power1.inOut" }, 9.25);
+
+        window.__timelines["07-step5-launch"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

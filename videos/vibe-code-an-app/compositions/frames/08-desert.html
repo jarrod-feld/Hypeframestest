@@ -1,0 +1,394 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Frame 8 — The desert</title>
+    <!-- head is discarded at mount; everything the runtime needs lives inside <template> -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-800.woff2") format("woff2");
+          font-weight: 800;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-weight: 900;
+          font-style: normal;
+        }
+
+        /* Root — styled via #root only (scoper drops root-class rules) */
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        /* ---- Track 0: full-bleed cream desert field (never on #root) ---- */
+        .d8-bg {
+          position: absolute;
+          inset: 0;
+          background-color: #ffdc8b;
+          background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.2px, transparent 1.2px);
+          background-size: 24px 24px;
+        }
+
+        /* ---- Shared scene stage: centered hero zone, y-center ≈ 0.42 × height ---- */
+        .d8-stage {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 84%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* ---- Scene 1: chunk-revealed pain line ---- */
+        .d8-line1 {
+          text-align: center;
+          font-weight: 800;
+          font-size: 4.4cqw;
+          line-height: 1.08;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #000;
+        }
+        .d8-chunk {
+          display: inline-block;
+        }
+        .d8-word-nobody {
+          position: relative;
+          display: inline-block;
+        }
+        /* the black marker box that snaps around NOBODY (css-marker-patterns, boxed frame) */
+        .d8-box {
+          position: absolute;
+          inset: -0.1em -0.16em;
+          border: 0.42cqw solid #000;
+          pointer-events: none;
+        }
+
+        /* ---- Scene 2: motion-blur streak line ---- */
+        .d8-line2 {
+          text-align: center;
+          font-weight: 900;
+          font-size: 5cqw;
+          line-height: 1.04;
+          letter-spacing: -0.03em;
+          text-transform: uppercase;
+          color: #000;
+          filter: url(#d8-streak-f);
+          will-change: transform, filter;
+        }
+
+        /* ---- Scene 3: horizon + tiny lemonade stand ---- */
+        .d8-horizon-svg {
+          position: absolute;
+          left: 0;
+          top: 706px;
+          width: 1920px;
+          height: 12px;
+          display: block;
+        }
+        .d8-horizon-svg path {
+          fill: none;
+          stroke: #000;
+          stroke-width: 6;
+          stroke-linecap: butt;
+        }
+
+        .d8-stand {
+          position: absolute;
+          left: 50%;
+          top: 574px;
+          width: 160px;
+          height: 138px;
+          margin-left: -80px;
+        }
+        .d8-awning {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 160px;
+          height: 36px;
+          box-sizing: border-box;
+          border: 4px solid #000;
+          background: repeating-linear-gradient(45deg, #f7cb46 0 12px, #000 12px 24px);
+          box-shadow: 4px 4px 0 #000;
+          z-index: 3;
+        }
+        .d8-post {
+          position: absolute;
+          top: 36px;
+          width: 8px;
+          height: 48px;
+          background: #000;
+          z-index: 1;
+        }
+        .d8-post-l {
+          left: 16px;
+        }
+        .d8-post-r {
+          right: 16px;
+        }
+        .d8-cup {
+          position: absolute;
+          bottom: 54px;
+          left: 98px;
+          width: 18px;
+          height: 22px;
+          box-sizing: border-box;
+          border: 3px solid #000;
+          background: #fe90e8;
+          z-index: 2;
+        }
+        .d8-counter {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 124px;
+          height: 54px;
+          margin-left: -62px;
+          box-sizing: border-box;
+          border: 4px solid #000;
+          background: #ffffff;
+          box-shadow: 4px 4px 0 #000;
+          z-index: 2;
+        }
+        .d8-lemon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 18px;
+          height: 18px;
+          margin: -9px 0 0 -9px;
+          box-sizing: border-box;
+          border: 3px solid #000;
+          background: #f7cb46;
+          transform: rotate(8deg); /* CSS-only tilt; never GSAP-animated */
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="08-desert"
+        data-width="1920"
+        data-height="1080"
+        data-duration="8.64"
+      >
+        <!-- Track 0 — full-duration cream ground -->
+        <div
+          class="clip d8-bg"
+          id="d8-bg"
+          data-start="0"
+          data-duration="8.64"
+          data-track-index="0"
+        ></div>
+
+        <!-- Track 1 — Scene 1: "HERE'S WHAT NOBODY TELLS YOU" in chunks -->
+        <div
+          class="clip d8-stage"
+          id="d8-s1"
+          data-start="0"
+          data-duration="2.75"
+          data-track-index="1"
+        >
+          <div class="d8-line1" id="d8-s1-group">
+            <div>
+              <span class="d8-chunk" id="d8-w1">HERE'S</span>
+              <span class="d8-chunk" id="d8-w2">WHAT</span>
+            </div>
+            <div>
+              <span class="d8-chunk d8-word-nobody" id="d8-w3"
+                >NOBODY<span class="d8-box" id="d8-box"></span
+              ></span>
+              <span class="d8-chunk" id="d8-w4">TELLS YOU</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 2 — Scene 2: motion-blur streak line -->
+        <div
+          class="clip d8-stage"
+          id="d8-s2"
+          data-start="2.4"
+          data-duration="2.75"
+          data-track-index="2"
+        >
+          <svg width="0" height="0" aria-hidden="true" style="position: absolute">
+            <defs>
+              <filter id="d8-streak-f" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur id="d8-streak-blur" in="SourceGraphic" stdDeviation="16 0" />
+              </filter>
+            </defs>
+          </svg>
+          <div id="d8-s2-recede">
+            <div class="d8-line2" id="d8-s2-line">
+              <div>BUILDING IS ONLY</div>
+              <div>HALF THE JOB.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 3 — Scene 3/4: horizon rule + tiny lemonade stand, then dead-still hold -->
+        <div
+          class="clip"
+          id="d8-s3"
+          data-start="4.8"
+          data-duration="3.84"
+          data-track-index="3"
+          style="position: absolute; inset: 0"
+        >
+          <svg
+            class="d8-horizon-svg"
+            viewBox="0 0 1920 12"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path id="d8-horizon" d="M 0 6 L 1920 6" />
+          </svg>
+
+          <div class="d8-stand" id="d8-stand">
+            <div class="d8-awning"></div>
+            <div class="d8-post d8-post-l"></div>
+            <div class="d8-post d8-post-r"></div>
+            <div class="d8-cup"></div>
+            <div class="d8-counter"><div class="d8-lemon"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        // ---- setup: seed the directional streak blur (motion-blur-streak, Path A) ----
+        const d8BlurNode = document.getElementById("d8-streak-blur");
+        const d8Blur = { v: 16 };
+        const d8WriteBlur = () => d8BlurNode.setAttribute("stdDeviation", d8Blur.v + " 0");
+        d8WriteBlur(); // seed so a seek to the entrance start shows the streaked state
+
+        // ---- setup: horizon self-draw (svg-path-draw) ----
+        const d8Horizon = document.getElementById("d8-horizon");
+        const d8HLen = d8Horizon.getTotalLength();
+        d8Horizon.style.strokeDasharray = d8HLen;
+        d8Horizon.style.strokeDashoffset = d8HLen;
+
+        const tl = gsap.timeline({ paused: true });
+
+        /* ============ Scene 1 (0.0–2.4) — chunk reveal + marker box ============ */
+        // discrete-text-sequence: whole chunks jump in at thresholds on the VO —
+        // "here's"(0.30) "what"(0.62) "nobody"(0.98) "tells you"(1.38). Near-zero
+        // duration = instant state jump; fromTo declares both endpoints (seek-safe).
+        [
+          ["#d8-w1", 0.3],
+          ["#d8-w2", 0.62],
+          ["#d8-w3", 0.98],
+          ["#d8-w4", 1.38],
+        ].forEach(([sel, t]) => {
+          tl.fromTo(sel, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.06, ease: "none" }, t);
+        });
+
+        // black marker box snaps (stamps down) around NOBODY — fast scale-down,
+        // power4.out, tilt folded into the tween (no CSS transform conflict)
+        tl.fromTo(
+          "#d8-box",
+          { autoAlpha: 0, scale: 1.9, rotation: -2 },
+          { autoAlpha: 1, scale: 1, rotation: -2, duration: 0.28, ease: "power4.out" },
+          1.72,
+        );
+
+        /* ============ Seam 1→2 (2.40–2.62) — velocity-matched leftward cut ============ */
+        // whole-line cut-the-curve exit: barely creeps then RIPS left; fade completes
+        // while still accelerating, dying just before the incoming streak resolves
+        tl.fromTo(
+          "#d8-s1-group",
+          { x: 0 },
+          { x: -260, duration: 0.34, ease: "power4.in", immediateRender: false },
+          2.4,
+        );
+        tl.fromTo(
+          "#d8-s1-group",
+          { opacity: 1 },
+          { opacity: 0, duration: 0.26, ease: "power1.in", immediateRender: false },
+          2.4,
+        );
+
+        /* ============ Scene 2 (2.4–4.8) — motion-blur streak fly-in ============ */
+        // continues the leftward direction: enters from +430, resolves sharp at center.
+        // Blur envelope shares the exact window + ease so peak blur == peak speed.
+        tl.fromTo(
+          "#d8-s2-line",
+          { x: 430, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.5, ease: "power4.out" },
+          2.56,
+        );
+        tl.fromTo(
+          d8Blur,
+          { v: 16 },
+          {
+            v: 0,
+            duration: 0.5,
+            ease: "power4.out",
+            onUpdate: d8WriteBlur,
+            immediateRender: false,
+          },
+          2.56,
+        );
+
+        /* ============ Seam 2→3 (4.80–5.10) — line recedes, vignette arrives ============ */
+        // inverse-zoom flavored clear: the line falls away from the viewer
+        // (scale down + soft blur + linear fade), then the clip window ends at 5.15
+        tl.fromTo(
+          "#d8-s2-recede",
+          { scale: 1 },
+          { scale: 0.84, duration: 0.3, ease: "power3.in", immediateRender: false },
+          4.8,
+        );
+        tl.fromTo(
+          "#d8-s2-recede",
+          { filter: "blur(0px)" },
+          { filter: "blur(9px)", duration: 0.3, ease: "power3.in", immediateRender: false },
+          4.8,
+        );
+        tl.fromTo(
+          "#d8-s2-recede",
+          { opacity: 1 },
+          { opacity: 0, duration: 0.26, ease: "none", immediateRender: false },
+          4.8,
+        );
+
+        /* ============ Scene 3 (4.8–7.3) — horizon draws, the stand sits tiny ============ */
+        // svg-path-draw: thin horizon rule traces itself edge-to-edge across the lower third
+        tl.to(
+          "#d8-horizon",
+          { strokeDashoffset: 0, duration: 0.95, ease: "power2.out" },
+          4.95,
+        );
+
+        // the lemonade stand fades up TINY at center on "lemonade stand" — opacity
+        // only, no movement: the scale contrast against the vast field IS the desert
+        tl.fromTo(
+          "#d8-stand",
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.7, ease: "power2.out" },
+          6.3,
+        );
+
+        /* ============ Scene 4 (7.3–8.64) — dead-still held read. Nothing moves. ============ */
+
+        window.__timelines["08-desert"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
