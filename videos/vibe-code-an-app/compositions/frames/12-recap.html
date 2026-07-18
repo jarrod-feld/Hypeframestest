@@ -1,0 +1,330 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 12 — The whole game · BlockFrame inverted recap · kinetic-type-beats
+         (Brand_Outro verb-march folded with the Benefits stack) + vertical-spring-ticker step-up -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ---- fonts (only files shipped with the project) ---- */
+        @font-face {
+          font-family: "Inter";
+          font-weight: 900;
+          font-style: normal;
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+        }
+
+        /* ---- root (styled via #root, never a class) ---- */
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* ---- full-bleed ground on a clip, never on #root (black field = the one inversion) ---- */
+        .bg-black {
+          background: #000000;
+        }
+        .dots {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, rgba(255, 253, 245, 0.7) 2.2px, transparent 2.3px);
+          background-size: 1.8cqw 1.8cqw;
+          opacity: 0.06;
+        }
+
+        /* ---- recap stack (vertical-spring-ticker wrapper — JS owns its transform) ----
+             row0 lands dead-center at y≈0.42h; each arrival steps the stack up 75px,
+             final five-row stack spans ~79px→829px (inside the 900px caption keep-out) */
+        #f12-stack {
+          position: absolute;
+          left: 0;
+          top: 35.09cqh; /* 379px — row0 center = 454px at t0 */
+          width: 100%;
+          will-change: transform;
+        }
+        .row {
+          height: 13.889cqh; /* 150px, pixel-locked to STEP_PX = 75 in the script */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .rowin {
+          display: flex;
+          align-items: center;
+          gap: 1.35cqw;
+          will-change: transform, filter, opacity;
+        }
+        .txt {
+          font-size: 4.8cqw;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: -0.02em;
+          line-height: 1;
+          white-space: nowrap;
+        }
+        .c-pink { color: #fe90e8; }
+        .c-blue { color: #c0f7fe; }
+        .c-yellow { color: #f7cb46; }
+        .c-green { color: #99e885; }
+        .c-off { color: #fffdf5; }
+
+        /* ---- pictogram chips (white border + white hard shadow = the close inversion chrome) ---- */
+        .chip {
+          position: relative;
+          flex: none;
+          width: 4.6cqw;
+          height: 4.6cqw;
+          box-sizing: border-box;
+          border: 0.16cqw solid #ffffff;
+          box-shadow: 0.21cqw 0.21cqw 0 #ffffff;
+          display: grid;
+          place-items: center;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+        .chip-pink { background: #fe90e8; }
+        .chip-blue { background: #c0f7fe; }
+        .chip-yellow { background: #f7cb46; }
+        .chip-green { background: #99e885; }
+        .chip-off { background: #fffdf5; }
+
+        /* glyph 1 · speech bubble (say it) */
+        .g-bubble {
+          position: relative;
+          width: 2.4cqw;
+          height: 1.7cqw;
+          background: #000;
+          margin-bottom: 0.5cqw;
+        }
+        .g-bubble::after {
+          content: "";
+          position: absolute;
+          left: 0.42cqw;
+          top: 100%;
+          width: 0;
+          height: 0;
+          border-top: 0.55cqw solid #000;
+          border-right: 0.55cqw solid transparent;
+        }
+
+        /* glyph 2 · LEGO brick (the AI builds it) */
+        .g-brick {
+          position: relative;
+          width: 2.6cqw;
+          height: 1.35cqw;
+          background: #000;
+          margin-top: 0.45cqw;
+        }
+        .g-brick::before,
+        .g-brick::after {
+          content: "";
+          position: absolute;
+          top: -0.48cqw;
+          width: 0.62cqw;
+          height: 0.5cqw;
+          background: #000;
+        }
+        .g-brick::before { left: 0.4cqw; }
+        .g-brick::after { right: 0.4cqw; }
+
+        /* glyph 3 · button + cursor (click launch) */
+        .g-btn {
+          position: relative;
+          width: 2.6cqw;
+          height: 1.5cqw;
+          box-sizing: border-box;
+          border: 0.14cqw solid #000;
+        }
+        .g-btn::after {
+          content: "";
+          position: absolute;
+          right: -0.5cqw;
+          bottom: -0.55cqw;
+          width: 1.15cqw;
+          height: 1.15cqw;
+          background: #000;
+          clip-path: polygon(0 0, 0 86%, 30% 66%, 46% 100%, 62% 92%, 45% 60%, 74% 52%);
+        }
+
+        /* glyph 4 · channel pills (tell people) */
+        .g-pills {
+          display: flex;
+          flex-direction: column;
+          gap: 0.34cqw;
+          align-items: flex-start;
+        }
+        .g-pills div {
+          height: 0.62cqw;
+          border-radius: 999px;
+          background: #000;
+        }
+        .g-p1 { width: 2.5cqw; }
+        .g-p2 { width: 1.7cqw; }
+
+        /* glyph 5 · flyer (feed what works) — CSS tilt only; GSAP never touches this element */
+        .g-flyer {
+          position: relative;
+          width: 1.9cqw;
+          height: 2.5cqw;
+          background: #000;
+          transform: rotate(-8deg);
+        }
+        .g-flyer::before,
+        .g-flyer::after {
+          content: "";
+          position: absolute;
+          left: 0.3cqw;
+          right: 0.3cqw;
+          height: 0.28cqw;
+          background: #fffdf5;
+        }
+        .g-flyer::before { top: 0.45cqw; }
+        .g-flyer::after { top: 1.05cqw; }
+      </style>
+
+      <div id="root" data-composition-id="12-recap" data-width="1920" data-height="1080">
+        <!-- ground: black field, full duration, lowest track (life-or-death: never on #root) -->
+        <div class="clip bg-black" data-start="0" data-duration="7.04" data-track-index="0">
+          <div class="dots"></div>
+        </div>
+
+        <!-- Scene 1+2 (0.0–7.04s): the five-beat recap stack, then the held read -->
+        <div class="clip" data-start="0" data-duration="7.04" data-track-index="1">
+          <div id="f12-stack">
+            <div class="row">
+              <div class="rowin" id="f12-r1">
+                <div class="chip chip-pink" id="f12-c1"><div class="g-bubble"></div></div>
+                <div class="txt c-pink">SAY IT.</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="rowin" id="f12-r2">
+                <div class="chip chip-blue" id="f12-c2"><div class="g-brick"></div></div>
+                <div class="txt c-blue">THE AI BUILDS IT.</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="rowin" id="f12-r3">
+                <div class="chip chip-yellow" id="f12-c3"><div class="g-btn"></div></div>
+                <div class="txt c-yellow">CLICK LAUNCH.</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="rowin" id="f12-r4">
+                <div class="chip chip-green" id="f12-c4"><div class="g-pills"><div class="g-p1"></div><div class="g-p2"></div></div></div>
+                <div class="txt c-green">TELL PEOPLE.</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="rowin" id="f12-r5">
+                <div class="chip chip-off" id="f12-c5"><div class="g-flyer"></div></div>
+                <div class="txt c-off">FEED WHAT WORKS.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        /* ---- kinetic-beat-slam: ONE beat array is the rhythmic spine.
+               Five spoken cues → five stamps; steps + chips read the same grid. ---- */
+        const BEATS = [0.35, 1.45, 2.55, 3.65, 4.75];
+
+        /* ---- vertical-spring-ticker (smooth register): additive spring objects,
+               each contributing one 75px step-up so the stack makes room, summed
+               in onUpdate. Steps lead each stamp by 0.28s. ---- */
+        const STEP_PX = 75; /* half of the 150px row — stack stays centered on the anchor */
+        const stackEl = document.getElementById("f12-stack");
+        const springs = [{ p: 0 }, { p: 0 }, { p: 0 }, { p: 0 }];
+        function applyStack() {
+          const sum = springs.reduce((acc, s) => acc + s.p, 0);
+          stackEl.style.transform = "translateY(" + -sum * STEP_PX + "px)";
+        }
+        applyStack(); /* initial state — correct at t=0 under seek */
+        springs.forEach((spring, i) => {
+          tl.to(
+            spring,
+            { p: 1, duration: 0.45, ease: "power3.out", onUpdate: applyStack },
+            BEATS[i + 1] - 0.28
+          );
+        });
+
+        /* ---- the five stamps — distinct percussive entrances (kinetic-beat-slam),
+               each landing exactly on its spoken cue; fromTo so every seek is exact ---- */
+        /* beat 1 · "SAY IT." — hard slam: scale + blur, power4 */
+        tl.fromTo(
+          "#f12-r1",
+          { scale: 1.55, opacity: 0, filter: "blur(12px)" },
+          { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power4.out" },
+          BEATS[0]
+        );
+        /* beat 2 · "THE AI BUILDS IT." — whip-in from the left, expo */
+        tl.fromTo(
+          "#f12-r2",
+          { x: -260, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.45, ease: "expo.out" },
+          BEATS[1]
+        );
+        /* beat 3 · "CLICK LAUNCH." — heavy rise with momentum, circ */
+        tl.fromTo(
+          "#f12-r3",
+          { y: 90, rotation: 3, opacity: 0 },
+          { y: 0, rotation: 0, opacity: 1, duration: 0.5, ease: "circ.out" },
+          BEATS[2]
+        );
+        /* beat 4 · "TELL PEOPLE." — drop-stamp from above, power4 */
+        tl.fromTo(
+          "#f12-r4",
+          { y: -80, scale: 1.12, opacity: 0 },
+          { y: 0, scale: 1, opacity: 1, duration: 0.45, ease: "power4.out" },
+          BEATS[3]
+        );
+        /* beat 5 · "FEED WHAT WORKS." — payoff: big scale resolve through blur, expo
+               (scale-from capped at 1.5 so the transient never crosses the 900px keep-out) */
+        tl.fromTo(
+          "#f12-r5",
+          { scale: 1.5, opacity: 0, filter: "blur(10px)" },
+          { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" },
+          BEATS[4]
+        );
+
+        /* ---- pictogram echoes — spring-pop-entrance (smooth power3 settle),
+               each popping just after its line hits ---- */
+        for (let n = 1; n <= 4; n++) {
+          tl.fromTo(
+            "#f12-c" + n,
+            { scale: 0, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" },
+            BEATS[n - 1] + 0.1
+          );
+        }
+        /* final chip = this frame's ONE earned overshoot (modest, playful register) */
+        tl.fromTo(
+          "#f12-c5",
+          { scale: 0, opacity: 0, rotation: -12 },
+          { scale: 1, opacity: 1, rotation: 0, duration: 0.5, ease: "back.out(1.7)" },
+          BEATS[4] + 0.1
+        );
+
+        /* Scene 2 (5.5–7.04s): the full stack HOLDS dead still — the designated
+           held read; no exit (the root transition is the exit). */
+
+        window.__timelines["12-recap"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
