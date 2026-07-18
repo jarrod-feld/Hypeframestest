@@ -92,8 +92,8 @@
         }
         #f13-circle {
           position: absolute;
-          top: 50%;
-          left: 50%;
+          top: -52%;
+          left: -14%;
           width: 128%;
           height: 205%;
           border: 0.3cqw solid #000;
@@ -310,8 +310,8 @@
            no CSS transform on a GSAP-animated element) */
         tl.fromTo(
           "#f13-circle",
-          { xPercent: -50, yPercent: -50, scale: 0, rotation: -4, opacity: 0 },
-          { xPercent: -50, yPercent: -50, scale: 1, rotation: -4, opacity: 1, duration: 0.5, ease: "power3.out" },
+          { scale: 0, rotation: -4, opacity: 0 },
+          { scale: 1, rotation: -4, opacity: 1, duration: 0.5, ease: "power3.out" },
           f13S2[2] + 0.42
         );
         /* yellow highlight sweep behind "CLEAR WORDS." */
