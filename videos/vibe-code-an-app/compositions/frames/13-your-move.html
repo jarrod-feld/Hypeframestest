@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 13 — Your move · BlockFrame · kinetic-type-beats (CTA variant: value lines clear beat-by-beat onto the final ask). FINAL frame — no exit, held read to the end. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ---- fonts (only files shipped with the project) ---- */
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-800.woff2") format("woff2");
+          font-weight: 800;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-weight: 900;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          src: url("assets/fonts/SpaceGrotesk-600.woff2") format("woff2");
+          font-weight: 600;
+          font-style: normal;
+        }
+
+        /* ---- root (styled via #root, never a class) ---- */
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* ---- full-bleed ground (on a clip, never on #root): offwhite + faint dot grid ---- */
+        .f13-bg {
+          background: #fffdf5;
+        }
+        .f13-dots {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, #000 2.2px, transparent 2.3px);
+          background-size: 1.8cqw 1.8cqw;
+          opacity: 0.05;
+        }
+
+        /* ---- Scenes 1–2 · the two value lines (quiet, centered, top-83% stage) ---- */
+        .f13-lines-stage {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 83%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 3.4cqh;
+        }
+        .f13-line {
+          display: flex;
+          gap: 0.34em;
+          font-size: 2.1cqw;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: -0.01em;
+          line-height: 1.2;
+          color: #000;
+        }
+        .w {
+          position: relative;
+          display: inline-block;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+
+        /* css-marker-patterns · circle mode — hand-drawn ring around "A PROBLEM," */
+        .mh-circle-text {
+          position: relative;
+          z-index: 1;
+        }
+        #f13-circle {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 128%;
+          height: 205%;
+          border: 0.3cqw solid #000;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 0;
+          will-change: transform, opacity;
+        }
+
+        /* css-marker-patterns · highlight mode — yellow sweep behind "CLEAR WORDS." */
+        .mh-hl-bar {
+          position: absolute;
+          top: -0.05em;
+          bottom: -0.05em;
+          left: -0.18em;
+          right: -0.18em;
+          background: #f7cb46;
+          transform-origin: left center;
+          z-index: 0;
+          will-change: transform;
+        }
+        .mh-hl-text {
+          position: relative;
+          z-index: 1;
+        }
+
+        /* ---- Scene 3 · YOUR MOVE label-pill (the universal eyebrow — never plain text) ---- */
+        .f13-pill-stage {
+          position: absolute;
+          left: 0;
+          top: 21.5cqh;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+        #f13-pill {
+          font-family: "Space Grotesk", sans-serif;
+          font-size: 1.05cqw;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #000;
+          background: #ffffff;
+          border: 0.3cqw solid #000;
+          border-radius: 9999px;
+          padding: 0.5cqw 1.4cqw;
+          box-shadow: 0.4cqw 0.4cqw 0 #000;
+          will-change: transform, opacity;
+        }
+
+        /* ---- Scene 3 · final CTA line (quote-text register: Inter 900 upper, −0.02em) ---- */
+        .f13-cta-stage {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 83%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        #f13-cta {
+          position: relative;
+          font-size: 3.6cqw;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: -0.02em;
+          line-height: 1.15;
+          color: #000;
+          white-space: nowrap;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+        .f13-today-wrap {
+          position: relative;
+          display: inline-block;
+        }
+        /* svg-path-draw · black underline self-draws beneath "TODAY." */
+        #f13-underline-svg {
+          position: absolute;
+          left: -2%;
+          bottom: -0.34em;
+          width: 104%;
+          height: 0.36em;
+          overflow: visible;
+        }
+        #f13-underline {
+          fill: none;
+          stroke: #000;
+          stroke-width: 9;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+
+        /* pink star burst at the CTA's corner (black border via layered clip-path) */
+        #f13-star {
+          position: absolute;
+          right: -5.6cqw;
+          top: -3.4cqw;
+          width: 4.8cqw;
+          height: 4.8cqw;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+          z-index: 2;
+        }
+        .f13-star-outer,
+        .f13-star-inner {
+          position: absolute;
+          clip-path: polygon(
+            50% 0%, 59.3% 21.5%, 79.4% 9.5%, 74.3% 32.4%, 97.6% 34.5%,
+            80% 50%, 97.6% 65.5%, 74.3% 67.6%, 79.4% 90.5%, 59.3% 78.5%,
+            50% 100%, 40.7% 78.5%, 20.6% 90.5%, 25.7% 67.6%, 2.4% 65.5%,
+            20% 50%, 2.4% 34.5%, 25.7% 32.4%, 20.6% 9.5%, 40.7% 21.5%
+          );
+        }
+        .f13-star-outer {
+          inset: 0;
+          background: #000;
+        }
+        .f13-star-inner {
+          inset: 8%;
+          background: #fe90e8;
+        }
+      </style>
+
+      <div id="root" data-composition-id="13-your-move" data-width="1920" data-height="1080">
+        <!-- ground: offwhite field, full duration -->
+        <div class="clip f13-bg" data-start="0" data-duration="7.403" data-track-index="0">
+          <div class="f13-dots"></div>
+        </div>
+
+        <!-- Scenes 1–2 (0.0–4.6s): two quiet value lines; waterfall-clears in Scene 3 -->
+        <div class="clip" data-start="0" data-duration="5.2" data-track-index="1">
+          <div class="f13-lines-stage">
+            <div class="f13-line" id="f13-line1">
+              <span class="w">YOU</span>
+              <span class="w">DON'T</span>
+              <span class="w">NEED</span>
+              <span class="w">TO</span>
+              <span class="w">BE</span>
+              <span class="w">A</span>
+              <span class="w">CODER</span>
+              <span class="w">ANYMORE.</span>
+            </div>
+            <div class="f13-line" id="f13-line2">
+              <span class="w">YOU</span>
+              <span class="w">NEED</span>
+              <span class="w"><span class="mh-circle-text">A PROBLEM,</span><span id="f13-circle"></span></span>
+              <span class="w">AND</span>
+              <span class="w"><span class="mh-hl-bar" id="f13-hl"></span><span class="mh-hl-text">CLEAR WORDS.</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 3 (4.6s→end): YOUR MOVE eyebrow pill, upper-center -->
+        <div class="clip" data-start="4.7" data-duration="2.703" data-track-index="2">
+          <div class="f13-pill-stage">
+            <div id="f13-pill">YOUR MOVE</div>
+          </div>
+        </div>
+
+        <!-- Scenes 3–4 (4.85s→end): the final ask — spring-pops, underline draws, star pops, dead-still hold -->
+        <div class="clip" data-start="4.85" data-duration="2.553" data-track-index="3">
+          <div class="f13-cta-stage">
+            <div id="f13-cta">
+              <span>DESCRIBE YOUR FIRST APP.</span>
+              <span class="f13-today-wrap">TODAY.<svg id="f13-underline-svg" viewBox="0 0 320 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path id="f13-underline" d="M8 26 Q 80 12 160 20 Q 240 30 312 14" /></svg></span>
+              <div id="f13-star">
+                <div class="f13-star-outer"></div>
+                <div class="f13-star-inner"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        /* ---- dynamic-content-sequencing: per-word start times computed from
+               content length (BASE + chars × SEC_PER_CHAR), not hardcoded ---- */
+        const F13_BASE = 0.1;
+        const F13_PER_CHAR = 0.028;
+        function f13Schedule(words, at) {
+          let t = at;
+          const starts = [];
+          words.forEach((el) => {
+            starts.push(t);
+            t += F13_BASE + el.textContent.trim().length * F13_PER_CHAR;
+          });
+          return starts;
+        }
+        const f13L1 = gsap.utils.toArray("#f13-line1 .w");
+        const f13L2 = gsap.utils.toArray("#f13-line2 .w");
+        /* Scene 1 (0.0–2.5s): line 1 reveals per-word — deliberately quiet */
+        const f13S1 = f13Schedule(f13L1, 0.22);
+        /* Scene 2 (2.5s+): line 2 reveals per-word on its VO cues */
+        const f13S2 = f13Schedule(f13L2, 2.55);
+
+        [...f13L1, ...f13L2].forEach((el, i) => {
+          const at = i < f13L1.length ? f13S1[i] : f13S2[i - f13L1.length];
+          tl.fromTo(
+            el,
+            { y: 26, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
+            at
+          );
+        });
+
+        /* ---- Scene 2 (2.5–4.6s) — css-marker-patterns, timed off the word cues ---- */
+        /* hand-drawn marker circle around "A PROBLEM," (xPercent/yPercent centering —
+           no CSS transform on a GSAP-animated element) */
+        tl.fromTo(
+          "#f13-circle",
+          { xPercent: -50, yPercent: -50, scale: 0, rotation: -4, opacity: 0 },
+          { xPercent: -50, yPercent: -50, scale: 1, rotation: -4, opacity: 1, duration: 0.5, ease: "power3.out" },
+          f13S2[2] + 0.42
+        );
+        /* yellow highlight sweep behind "CLEAR WORDS." */
+        tl.fromTo(
+          "#f13-hl",
+          { scaleX: 0, skewX: -6 },
+          { scaleX: 1, skewX: -6, duration: 0.45, ease: "power2.out" },
+          f13S2[4] + 0.42
+        );
+        /* the line holds until the clear */
+
+        /* ---- Scene 3 seam (4.6s) — velocity-matched waterfall clear (cut catalog):
+               each word rips left on power4.in, fade completes ~25–30% into travel,
+               reading-order stagger; the incoming pop ignites as the last word dies ---- */
+        const F13_CLEAR_AT = 4.6;
+        [...f13L1, ...f13L2].forEach((el, i) => {
+          const at = F13_CLEAR_AT + i * 0.02;
+          tl.to(el, { x: -230, duration: 0.34, ease: "power4.in" }, at);
+          tl.to(el, { opacity: 0, duration: 0.18, ease: "power1.in" }, at);
+        });
+
+        /* ---- Scene 3 (4.6–6.5s) — YOUR MOVE pill settles in quietly ---- */
+        tl.fromTo(
+          "#f13-pill",
+          { y: -26, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" },
+          4.78
+        );
+
+        /* spring-pop-entrance — the video's final EARNED pop (modest overshoot) */
+        tl.fromTo(
+          "#f13-cta",
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.62, ease: "back.out(1.35)" },
+          4.95
+        );
+
+        /* svg-path-draw — black underline self-draws beneath "TODAY."
+           (dash pattern = measured path length, offset animates to 0) */
+        const f13Path = document.getElementById("f13-underline");
+        const f13Len = f13Path.getTotalLength();
+        gsap.set(f13Path, { strokeDasharray: f13Len, strokeDashoffset: f13Len });
+        tl.to(f13Path, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, 5.85);
+
+        /* one pink star pops at the CTA's corner — snappy settle, no second overshoot */
+        tl.fromTo(
+          "#f13-star",
+          { scale: 0, opacity: 0, rotation: -30 },
+          { scale: 1, opacity: 1, rotation: -10, duration: 0.42, ease: "power4.out" },
+          6.12
+        );
+
+        /* ---- Scene 4 (6.5–7.403s) — final held read: dead still to the end ---- */
+
+        window.__timelines["13-your-move"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

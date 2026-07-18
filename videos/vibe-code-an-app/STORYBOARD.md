@@ -23,7 +23,7 @@ music: none
 - duration: 7.061s
 - poster: 5s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/01-just-by-talking.html
 - type: hook
 - persuasion: Rhetorical question + counterintuitive claim
@@ -48,7 +48,7 @@ keyMessage: You can create a real app with plain language alone.
 - duration: 8.427s
 - poster: 8s
 - transition_in: crossfade
-- status: outline
+- status: animated
 - src: compositions/frames/02-vibe-coding.html
 - type: product_intro
 - persuasion: Concept announcement + distillation
@@ -73,7 +73,7 @@ keyMessage: Vibe coding = you describe, the AI writes the code.
 - duration: 11.115s
 - poster: 9s
 - transition_in: push-slide LEFT
-- status: outline
+- status: animated
 - src: compositions/frames/03-step1-tiny-problem.html
 - type: feature_showcase
 - persuasion: Frame-then-fill + analogy
@@ -99,7 +99,7 @@ keyMessage: Start with one small problem you can say in one sentence.
 - duration: 8.213s
 - poster: 7s
 - transition_in: push-slide LEFT
-- status: outline
+- status: animated
 - src: compositions/frames/04-step2-describe.html
 - type: feature_showcase
 - persuasion: Demonstration
@@ -125,7 +125,7 @@ keyMessage: Plain sentences are the whole interface.
 - duration: 13.995s
 - poster: 11s
 - transition_in: push-slide LEFT
-- status: outline
+- status: animated
 - src: compositions/frames/05-step3-lego-stack.html
 - type: feature_showcase
 - persuasion: Analogy + common-belief vs reality
@@ -151,7 +151,7 @@ keyMessage: Tech stack = LEGO box; take the boring popular default and let the A
 - duration: 9.365s
 - poster: 8s
 - transition_in: push-slide LEFT
-- status: outline
+- status: animated
 - src: compositions/frames/06-step4-loop.html
 - type: feature_showcase
 - persuasion: Causal chain + demonstration
@@ -177,7 +177,7 @@ keyMessage: Describe, look, fix, repeat until a stranger can use it.
 - duration: 10.304s
 - poster: 9s
 - transition_in: push-slide LEFT
-- status: outline
+- status: animated
 - src: compositions/frames/07-step5-launch.html
 - type: feature_showcase
 - persuasion: Concretization (deploy = a computer that never sleeps)
@@ -204,7 +204,7 @@ keyMessage: Launching is one click; deploy just means the internet can reach it.
 - duration: 8.64s
 - poster: 8s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/08-desert.html
 - type: pain_point
 - persuasion: Visceral metaphor + common-belief vs reality
@@ -230,7 +230,7 @@ keyMessage: Shipping isn't the finish line; being found is.
 - duration: 8.896s
 - poster: 9s
 - transition_in: push-slide LEFT
-- status: outline
+- status: animated
 - src: compositions/frames/09-move1-organic.html
 - type: feature_showcase
 - persuasion: Signposting + contrast (say vs show)
@@ -283,7 +283,7 @@ keyMessage: Paid ads come second, start at ~$5/day, and are tests, not guarantee
 - duration: 11.712s
 - poster: 10s
 - transition_in: crossfade
-- status: outline
+- status: animated
 - src: compositions/frames/11-one-number.html
 - type: social_proof
 - persuasion: Worked example with real numbers
@@ -309,7 +309,7 @@ keyMessage: A customer must bring in more than the ad spent to find them.
 - duration: 7.04s
 - poster: 7s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/12-recap.html
 - type: branding
 - persuasion: Distillation + callback
@@ -332,7 +332,7 @@ keyMessage: The whole pipeline fits in one breath.
 - duration: 7.403s
 - poster: 8s
 - transition_in: crossfade
-- status: outline
+- status: animated
 - src: compositions/frames/13-your-move.html
 - type: cta
 - persuasion: Generalization + direct address
