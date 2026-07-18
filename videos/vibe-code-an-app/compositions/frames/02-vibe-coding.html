@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 2 — That's vibe coding. All render-critical content lives inside <template>. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ---- Fonts (project-shipped files only) ---- */
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-800.woff2") format("woff2");
+          font-weight: 800;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-weight: 900;
+          font-style: normal;
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          src: url("assets/fonts/SpaceGrotesk-600.woff2") format("woff2");
+          font-weight: 600;
+          font-style: normal;
+        }
+
+        /* ---- Root (styled via #root, never a class) ---- */
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* ---- Background clip: full-bleed blue field + quiet BlockFrame chrome ---- */
+        #f02vc-bg {
+          background: #c0f7fe;
+        }
+        .f02vc-dots {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, rgba(0, 0, 0, 0.09) 1.8px, transparent 1.8px);
+          background-size: 38px 38px;
+        }
+        /* static decorations — never GSAP-animated, so CSS transform tilt is safe */
+        .f02vc-deco-yellow {
+          position: absolute;
+          right: 120px;
+          top: 112px;
+          width: 150px;
+          height: 56px;
+          background: #f7cb46;
+          border: 6px solid #000;
+          box-shadow: 8px 8px 0 #000;
+          transform: rotate(7deg);
+        }
+        .f02vc-deco-pink {
+          position: absolute;
+          left: 132px;
+          top: 778px;
+          width: 46px;
+          height: 46px;
+          background: #fe90e8;
+          border: 6px solid #000;
+          box-shadow: 8px 8px 0 #000;
+          transform: rotate(-8deg);
+        }
+
+        /* ---- Stage clip ---- */
+
+        /* Scene 1 chrome — label pill, upper-center (never plain text per BlockFrame) */
+        .f02vc-label {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 150px;
+          margin: 0 auto;
+          width: max-content;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 28px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #000;
+          background: #ffffff;
+          border: 6px solid #000;
+          border-radius: 9999px;
+          box-shadow: 8px 8px 0 #000;
+          padding: 16px 36px;
+          will-change: transform;
+        }
+
+        /* Focal — the VIBE CODING pill. Outer wrap takes the Scene-2 compress
+           (y/scale), inner pill takes the Scene-1 entrance pop — no compound
+           transform conflicts. Centered by margin:auto, not CSS translate. */
+        .f02vc-pillwrap {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 320px;
+          margin: 0 auto;
+          width: max-content;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        .f02vc-pill {
+          font-family: "Inter", sans-serif;
+          font-weight: 900;
+          font-size: 138px;
+          line-height: 1;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          color: #000;
+          background: #fffdf5;
+          border: 8px solid #000;
+          border-radius: 9999px;
+          box-shadow: 16px 16px 0 #000;
+          padding: 44px 96px;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        /* Scene 2 — the two per-word echo lines (block-level, sized wrapper so the
+           zoom-through clear can transform + blur it) */
+        .f02vc-lines {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 470px;
+          height: 280px;
+          text-align: center;
+          transform-origin: 50% 50%;
+          will-change: transform, filter, opacity;
+        }
+        .f02vc-line {
+          font-family: "Inter", sans-serif;
+          font-weight: 800;
+          font-size: 64px;
+          line-height: 1.15;
+          letter-spacing: -0.01em;
+          text-transform: uppercase;
+          color: #000;
+        }
+        #f02vc-line1 {
+          margin-top: 22px;
+        }
+        #f02vc-line2 {
+          margin-top: 30px;
+        }
+        .f02vc-w {
+          display: inline-block;
+          will-change: transform;
+        }
+
+        /* Scene 3 — the YOU TALK / IT TYPES half-cards */
+        .f02vc-card {
+          position: absolute;
+          font-family: "Inter", sans-serif;
+          font-weight: 900;
+          font-size: 92px;
+          line-height: 1;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          color: #000;
+          border: 8px solid #000;
+          box-shadow: 16px 16px 0 #000;
+          padding: 40px 60px;
+          transform-origin: 50% 50%;
+          will-change: transform, filter;
+        }
+        #f02vc-card-talk {
+          left: 330px;
+          top: 568px;
+          background: #fe90e8;
+        }
+        #f02vc-card-types {
+          left: 980px;
+          top: 612px;
+          background: #c0f7fe;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="02-vibe-coding"
+        data-width="1920"
+        data-height="1080"
+        data-duration="8.427"
+      >
+        <!-- Track 0 — full-bleed ground (never on #root) -->
+        <div id="f02vc-bg" class="clip" data-start="0" data-duration="8.427" data-track-index="0">
+          <div class="f02vc-dots"></div>
+          <div class="f02vc-deco-yellow"></div>
+          <div class="f02vc-deco-pink"></div>
+        </div>
+
+        <!-- Track 1 — content stage -->
+        <div id="f02vc-stage" class="clip" data-start="0" data-duration="8.427" data-track-index="1">
+          <div id="f02vc-label" class="f02vc-label">That&rsquo;s called</div>
+
+          <div id="f02vc-pillwrap" class="f02vc-pillwrap">
+            <div id="f02vc-pill" class="f02vc-pill">Vibe Coding</div>
+          </div>
+
+          <div id="f02vc-lines" class="f02vc-lines">
+            <div id="f02vc-line1" class="f02vc-line">
+              <span class="f02vc-w">You</span>
+              <span class="f02vc-w">describe</span>
+              <span class="f02vc-w">it</span>
+              <span class="f02vc-w">in</span>
+              <span class="f02vc-w">plain</span>
+              <span class="f02vc-w">words.</span>
+            </div>
+            <div id="f02vc-line2" class="f02vc-line">
+              <span class="f02vc-w">An</span>
+              <span class="f02vc-w">AI</span>
+              <span class="f02vc-w">writes</span>
+              <span class="f02vc-w">all</span>
+              <span class="f02vc-w">the</span>
+              <span class="f02vc-w">code.</span>
+            </div>
+          </div>
+
+          <div id="f02vc-card-talk" class="f02vc-card">You talk.</div>
+          <div id="f02vc-card-types" class="f02vc-card">It types.</div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        /* ------------------------------------------------------------------
+         * Scene 1 (0.0–2.0) — "That's vibe coding."
+         * Label pill fades up upper-center; the VIBE CODING pill scales down
+         * big→small into center (spring-pop-entrance, smooth power3 settle —
+         * no overshoot). Hero readable well before t = 0.5s.
+         * ------------------------------------------------------------------ */
+        tl.fromTo(
+          "#f02vc-label",
+          { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+          0.12
+        );
+        tl.fromTo(
+          "#f02vc-pill",
+          { scale: 2.35, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.85, ease: "power3.out" },
+          0.3
+        );
+
+        /* ------------------------------------------------------------------
+         * Scene 2 (2.0–5.6) — pill compresses upward to the upper third in one
+         * smooth translate; the label clears on the same upward vector
+         * (velocity-matched). Two echo lines assemble per-word on their VO
+         * cues (dynamic-content-sequencing — explicit beat arrays).
+         * ------------------------------------------------------------------ */
+        tl.to("#f02vc-label", { opacity: 0, y: -44, duration: 0.3, ease: "power2.in" }, 2.0);
+        tl.to(
+          "#f02vc-pillwrap",
+          { y: -180, scale: 0.78, duration: 0.8, ease: "power3.inOut" },
+          2.0
+        );
+
+        // "You describe your app in plain words" — 6 word beats
+        const L1_BEATS = [2.35, 2.55, 2.78, 2.92, 3.18, 3.42];
+        gsap.utils.toArray("#f02vc-line1 .f02vc-w").forEach((w, i) => {
+          tl.fromTo(
+            w,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+            L1_BEATS[Math.min(i, L1_BEATS.length - 1)]
+          );
+        });
+
+        // "an AI tool writes all the code for you" — 6 word beats
+        const L2_BEATS = [4.0, 4.18, 4.4, 4.66, 4.82, 5.02];
+        gsap.utils.toArray("#f02vc-line2 .f02vc-w").forEach((w, i) => {
+          tl.fromTo(
+            w,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+            L2_BEATS[Math.min(i, L2_BEATS.length - 1)]
+          );
+        });
+
+        /* ------------------------------------------------------------------
+         * Scene 3 (5.6–7.8) — velocity-matched cut (zoom-through exit: lines
+         * accelerate toward the viewer, blur to 10px on the wrapper, opacity
+         * on its own linear tween per the cut catalog), then the chant stamps
+         * land on their spoken cues (kinetic-beat-slam — two DISTINCT
+         * entrances: Z-stamp vs side-snap; percussive, not bouncy).
+         * ------------------------------------------------------------------ */
+        tl.to(
+          "#f02vc-lines",
+          { scale: 1.18, filter: "blur(10px)", duration: 0.22, ease: "power3.in" },
+          5.55
+        );
+        tl.to("#f02vc-lines", { opacity: 0, duration: 0.22, ease: "none" }, 5.55);
+
+        // "You talk." — pink half-card stamps down (matched blur signature at the seam)
+        tl.fromTo(
+          "#f02vc-card-talk",
+          { scale: 1.45, rotation: -2, opacity: 0, filter: "blur(8px)" },
+          {
+            scale: 1,
+            rotation: -2,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.5,
+            ease: "power4.out",
+          },
+          5.85
+        );
+
+        // "It types." — blue half-card snaps in from the right
+        tl.fromTo(
+          "#f02vc-card-types",
+          { x: 300, rotation: 5, opacity: 0 },
+          { x: 0, rotation: 2, opacity: 1, duration: 0.5, ease: "expo.out" },
+          6.55
+        );
+
+        /* Scene 4 (7.8–8.4) — lockup holds: pill above, half-cards below.
+           Stillness per the storyboard; no exit (root transition owns it). */
+
+        window.__timelines["02-vibe-coding"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

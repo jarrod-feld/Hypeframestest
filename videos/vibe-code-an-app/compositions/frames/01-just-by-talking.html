@@ -1,0 +1,365 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 1 — Just by talking · BlockFrame · kinetic-type-beats (sub-shape B) -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* ---- fonts (only files shipped with the project) ---- */
+        @font-face {
+          font-family: "Inter";
+          font-weight: 900;
+          font-style: normal;
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+        }
+
+        /* ---- root (styled via #root, never a class) ---- */
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* ---- full-bleed grounds (on clips, never on #root) ---- */
+        .bg-pink {
+          background: #fe90e8;
+        }
+        .bg-off {
+          background: #fffdf5;
+        }
+        .dots {
+          position: absolute;
+          inset: 0;
+        }
+        .dots-light {
+          background-image: radial-gradient(circle, rgba(255, 253, 245, 0.55) 2.2px, transparent 2.3px);
+          background-size: 1.8cqw 1.8cqw;
+          opacity: 0.5;
+        }
+        .dots-dark {
+          background-image: radial-gradient(circle, #000 2.2px, transparent 2.3px);
+          background-size: 1.8cqw 1.8cqw;
+          opacity: 0.05;
+        }
+        #f01-flash {
+          position: absolute;
+          inset: 0;
+          background: #ffffff;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        /* ---- scene 1 · MAKE A REAL APP ---- */
+        .s1-stage {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 83%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .s1-line {
+          display: flex;
+          gap: 0.28em;
+          font-size: 6.9cqw;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: -0.02em;
+          line-height: 1;
+          color: #000;
+        }
+        .w {
+          display: inline-block;
+          will-change: transform, filter, opacity;
+        }
+
+        /* ---- scene 2+ · hero JUST BY TALKING? ---- */
+        .hero-wrap {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding-top: 16.5cqh;
+        }
+        #f01-hero-block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.2cqh;
+          text-align: center;
+          color: #000;
+          text-transform: uppercase;
+          will-change: transform;
+        }
+        .hero-top {
+          font-size: 7.6cqw;
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          line-height: 0.95;
+        }
+        .hero-big {
+          font-size: 13.2cqw;
+          font-weight: 900;
+          letter-spacing: -0.03em;
+          line-height: 0.95;
+          white-space: nowrap;
+        }
+        .talking-wrap {
+          position: relative;
+          display: inline-block;
+        }
+        #f01-underline {
+          position: absolute;
+          left: 0.02em;
+          right: 0.02em;
+          bottom: -0.045em;
+          height: 0.085em;
+          background: #000;
+          transform-origin: left center;
+          will-change: transform;
+        }
+        #f01-q {
+          display: inline-block;
+          transform-origin: 50% 60%;
+          will-change: transform, opacity;
+        }
+
+        /* ---- scene 3/4 · negation token slot ---- */
+        .tok-inner {
+          position: absolute;
+          left: 0;
+          top: 63%;
+          width: 100%;
+          height: 20%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          will-change: transform;
+        }
+        .tok-text {
+          position: relative;
+          display: inline-block;
+          font-size: 4.6cqw;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: -0.02em;
+          line-height: 1;
+          color: #000;
+          white-space: nowrap;
+        }
+        .strike {
+          position: absolute;
+          left: -3%;
+          right: -3%;
+          top: 44%;
+          height: 0.12em;
+          background: #fe90e8;
+          transform-origin: left center;
+          will-change: transform;
+        }
+
+        /* ---- star burst (yellow, black border via layered clip-path) ---- */
+        #f01-star {
+          position: absolute;
+          left: 66.5cqw;
+          top: 60.5cqh;
+          width: 5.9cqw;
+          height: 5.9cqw;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+        .star-outer,
+        .star-inner {
+          position: absolute;
+          clip-path: polygon(
+            50% 0%, 59.3% 21.5%, 79.4% 9.5%, 74.3% 32.4%, 97.6% 34.5%,
+            80% 50%, 97.6% 65.5%, 74.3% 67.6%, 79.4% 90.5%, 59.3% 78.5%,
+            50% 100%, 40.7% 78.5%, 20.6% 90.5%, 25.7% 67.6%, 2.4% 65.5%,
+            20% 50%, 2.4% 34.5%, 25.7% 32.4%, 20.6% 9.5%, 40.7% 21.5%
+          );
+        }
+        .star-outer {
+          inset: 0;
+          background: #000;
+        }
+        .star-inner {
+          inset: 8%;
+          background: #f7cb46;
+        }
+      </style>
+
+      <div id="root" data-composition-id="01-just-by-talking" data-width="1920" data-height="1080">
+        <!-- grounds: pink field (S1) hard-flips to offwhite (S2+) -->
+        <div class="clip bg-pink" data-start="0" data-duration="2.3" data-track-index="0">
+          <div class="dots dots-light"></div>
+        </div>
+        <div class="clip bg-off" data-start="2.3" data-duration="4.761" data-track-index="0">
+          <div class="dots dots-dark"></div>
+          <div id="f01-flash"></div>
+        </div>
+
+        <!-- Scene 1 (0.0–2.3s): per-word beat slam, dead center -->
+        <div class="clip" data-start="0" data-duration="2.3" data-track-index="1">
+          <div class="s1-stage">
+            <div class="s1-line">
+              <span class="w" id="f01-w1">MAKE</span>
+              <span class="w" id="f01-w2">A</span>
+              <span class="w" id="f01-w3">REAL</span>
+              <span class="w" id="f01-w4">APP</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 2 (2.3s→end): oversized hero, holds beneath-token beats -->
+        <div class="clip" data-start="2.3" data-duration="4.761" data-track-index="2">
+          <div class="hero-wrap">
+            <div id="f01-hero-block">
+              <div class="hero-top">JUST BY</div>
+              <div class="hero-big"><span class="talking-wrap">TALKING<span id="f01-underline"></span></span><span id="f01-q">?</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 3 (4.1–6.2s): in-place token swaps as sequential clips -->
+        <div class="clip" data-start="4.1" data-duration="0.95" data-track-index="3">
+          <div class="tok-inner" id="f01-tok-a-inner">
+            <span class="tok-text">NO CODE.<span class="strike" id="f01-strike-a"></span></span>
+          </div>
+        </div>
+        <div class="clip" data-start="5.05" data-duration="1" data-track-index="3">
+          <div class="tok-inner" id="f01-tok-b-inner">
+            <span class="tok-text">NO DEGREE.<span class="strike" id="f01-strike-b"></span></span>
+          </div>
+        </div>
+        <!-- Scene 4 (6.05s→end): JUST WORDS. holds + one earned star pop -->
+        <div class="clip" data-start="6.05" data-duration="1.011" data-track-index="3">
+          <div class="tok-inner" id="f01-tok-c-inner">
+            <span class="tok-text">JUST WORDS.</span>
+          </div>
+          <div id="f01-star">
+            <div class="star-outer"></div>
+            <div class="star-inner"></div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        /* ---- Scene 1 (0.0–2.3s) — kinetic-beat-slam: one beat grid,
+               distinct entrance per word, smooth long-tail settles ---- */
+        tl.fromTo(
+          "#f01-w1",
+          { scale: 1.6, opacity: 0, filter: "blur(14px)" },
+          { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power4.out" },
+          0.15
+        );
+        tl.fromTo(
+          "#f01-w2",
+          { x: -150, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.45, ease: "expo.out" },
+          0.62
+        );
+        tl.fromTo(
+          "#f01-w3",
+          { y: 80, rotation: 4, opacity: 0 },
+          { y: 0, rotation: 0, opacity: 1, duration: 0.5, ease: "circ.out" },
+          1.08
+        );
+        tl.fromTo(
+          "#f01-w4",
+          { scale: 2.3, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out" },
+          1.5
+        );
+
+        /* ---- Scene 2 (2.3s) — hard-cut flash swap (discrete-text-sequence
+               whole-state cut via clip windows) + impact settle ---- */
+        tl.fromTo(
+          "#f01-flash",
+          { opacity: 0.85 },
+          { opacity: 0, duration: 0.16, ease: "power1.out" },
+          2.3
+        );
+        tl.fromTo(
+          "#f01-hero-block",
+          { scale: 1.06 },
+          { scale: 1, duration: 0.4, ease: "power3.out" },
+          2.3
+        );
+        /* the question mark punches in just after the flash */
+        tl.fromTo(
+          "#f01-q",
+          { scale: 2.6, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.34, ease: "power3.out" },
+          2.58
+        );
+        /* css-marker-patterns: black underline draws left→right under TALKING */
+        tl.fromTo(
+          "#f01-underline",
+          { scaleX: 0, rotation: -1.2 },
+          { scaleX: 1, rotation: -1.2, duration: 0.5, ease: "power2.out" },
+          2.95
+        );
+
+        /* ---- Scene 3 (4.1–6.2s) — token swaps land on their spoken cues;
+               the first two get a quick strike-through as they yield ---- */
+        tl.fromTo(
+          "#f01-tok-a-inner",
+          { scale: 1.07 },
+          { scale: 1, duration: 0.18, ease: "power3.out" },
+          4.1
+        );
+        tl.fromTo(
+          "#f01-strike-a",
+          { scaleX: 0, rotation: -2 },
+          { scaleX: 1, rotation: -2, duration: 0.22, ease: "power2.out" },
+          4.7
+        );
+        tl.fromTo(
+          "#f01-tok-b-inner",
+          { scale: 1.07 },
+          { scale: 1, duration: 0.18, ease: "power3.out" },
+          5.05
+        );
+        tl.fromTo(
+          "#f01-strike-b",
+          { scaleX: 0, rotation: -2 },
+          { scaleX: 1, rotation: -2, duration: 0.2, ease: "power2.out" },
+          5.7
+        );
+        tl.fromTo(
+          "#f01-tok-c-inner",
+          { scale: 1.07 },
+          { scale: 1, duration: 0.18, ease: "power3.out" },
+          6.05
+        );
+
+        /* ---- Scene 4 (6.2–7.061s) — spring-pop-entrance: this frame's ONE
+               earned pop (playful register), then stillness to the end ---- */
+        tl.fromTo(
+          "#f01-star",
+          { scale: 0, opacity: 0, rotation: -30 },
+          { scale: 1, opacity: 1, rotation: -8, duration: 0.5, ease: "back.out(1.7)" },
+          6.35
+        );
+
+        window.__timelines["01-just-by-talking"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

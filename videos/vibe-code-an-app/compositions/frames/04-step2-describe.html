@@ -1,0 +1,418 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 4 — Step 2: tell it like a friend (source metadata only; runtime clones <template> contents) -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Inter";
+          font-weight: 500;
+          src: url("assets/fonts/Inter-500.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 600;
+          src: url("assets/fonts/SpaceGrotesk-600.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 700;
+          src: url("assets/fonts/SpaceGrotesk-700.woff2") format("woff2");
+        }
+
+        /* Root styled via #root — never a class on the composition root */
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          font-family: "Inter", sans-serif;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* ---- Background track: full-bleed yellow field + dot grid + stripe deco ---- */
+        #step2-bg {
+          background-color: #f7cb46;
+          background-image: radial-gradient(
+            circle,
+            rgba(0, 0, 0, 0.09) 1.3px,
+            transparent 1.4px
+          );
+          background-size: 26px 26px;
+        }
+        .stripe-deco {
+          position: absolute;
+          top: 84px;
+          right: 96px;
+          width: 210px;
+          height: 92px;
+          border: 3px solid #000;
+          background-image: repeating-linear-gradient(
+            45deg,
+            #000 0 14px,
+            #fe90e8 14px 28px
+          );
+          transform: rotate(-6deg);
+        }
+
+        /* ---- STEP 2 rail chip (label-pill, top-left — shared rail identity) ---- */
+        #step2-chip {
+          position: absolute;
+          left: 60px;
+          top: 56px;
+          display: inline-flex;
+          align-items: center;
+          padding: 14px 30px;
+          background: #f7cb46;
+          border: 3px solid #000;
+          border-radius: 9999px;
+          box-shadow: 4px 4px 0 #000;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 24px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #000;
+        }
+
+        /* ---- Input card (sanctioned interface mock) ---- */
+        #step2-cardgroup {
+          position: absolute;
+          left: 50%;
+          top: 322px;
+          width: 1056px;
+          margin-left: -528px; /* center without CSS transform (GSAP tweens transforms here) */
+        }
+        .tilt-square {
+          position: absolute;
+          top: -26px;
+          right: -30px;
+          width: 70px;
+          height: 70px;
+          background: #fe90e8;
+          border: 4px solid #000;
+          transform: rotate(10deg);
+        }
+        #step2-card {
+          position: relative;
+          min-height: 256px;
+          box-sizing: border-box;
+          padding: 44px 48px;
+          background: #ffffff;
+          border: 4px solid #000;
+          box-shadow: 8px 8px 0 #000;
+        }
+        .typed {
+          font-family: "Inter", sans-serif;
+          font-weight: 500;
+          font-size: 52px;
+          line-height: 1.45;
+          color: #000;
+          white-space: pre-wrap;
+        }
+        #step2-text {
+          white-space: pre-wrap;
+        }
+        #step2-caret {
+          display: inline-block;
+          width: 13px;
+          height: 50px;
+          margin-left: 6px;
+          vertical-align: -6px;
+          background: #000000;
+        }
+
+        /* ---- Checklist chips row ---- */
+        #step2-chiprow {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 652px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 28px;
+        }
+        .chip-mask {
+          /* padding pocket so the pill's hard shadow survives the mask-wipe */
+          padding: 12px;
+          margin: -12px;
+          clip-path: inset(0% 100% 0% 0%);
+        }
+        .check-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 16px;
+          padding: 16px 30px;
+          background: #fffdf5;
+          border: 3px solid #000;
+          border-radius: 9999px;
+          box-shadow: 4px 4px 0 #000;
+        }
+        .chip-sq {
+          width: 22px;
+          height: 22px;
+          box-sizing: border-box;
+          border: 3px solid #000;
+        }
+        .sq-pink {
+          background: #fe90e8;
+        }
+        .sq-blue {
+          background: #c0f7fe;
+        }
+        .sq-green {
+          background: #99e885;
+        }
+        .chip-kw {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 26px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #000;
+        }
+        .chip-rest {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 24px;
+          letter-spacing: 0.02em;
+          color: #000;
+          margin-left: -4px;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="04-step2-describe"
+        data-width="1920"
+        data-height="1080"
+        data-duration="8.213"
+      >
+        <!-- Track 0 — full-bleed ground (never on #root) -->
+        <div
+          class="clip"
+          id="step2-bg"
+          data-start="0"
+          data-duration="8.213"
+          data-track-index="0"
+        >
+          <div class="stripe-deco"></div>
+        </div>
+
+        <!-- Track 1 — stage -->
+        <div
+          class="clip"
+          id="step2-stage"
+          data-start="0"
+          data-duration="8.213"
+          data-track-index="1"
+        >
+          <div id="step2-chip">Step 2</div>
+
+          <div id="step2-cardgroup">
+            <div class="tilt-square"></div>
+            <div id="step2-card">
+              <div class="typed"><span id="step2-text"></span><span id="step2-caret"></span></div>
+            </div>
+          </div>
+
+          <div id="step2-chiprow">
+            <div class="chip-mask" id="step2-chipmask-1">
+              <div class="check-chip">
+                <div class="chip-sq sq-pink"></div>
+                <span class="chip-kw">Who</span><span class="chip-rest">it&rsquo;s for</span>
+              </div>
+            </div>
+            <div class="chip-mask" id="step2-chipmask-2">
+              <div class="check-chip">
+                <div class="chip-sq sq-blue"></div>
+                <span class="chip-kw">What</span><span class="chip-rest">it does</span>
+              </div>
+            </div>
+            <div class="chip-mask" id="step2-chipmask-3">
+              <div class="check-chip">
+                <div class="chip-sq sq-green"></div>
+                <span class="chip-kw">What</span><span class="chip-rest">each screen shows</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        const DUR = 8.213;
+        const tl = gsap.timeline({ paused: true });
+
+        /* ---------------------------------------------------------------
+         * Scene 1 (0.0–1.6s) — chip slides down into the rail slot,
+         * empty input card establishes with a blinking caret.
+         * ------------------------------------------------------------- */
+        tl.fromTo(
+          "#step2-chip",
+          { y: -110, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.85, ease: "power3.out" },
+          0.1,
+        );
+        tl.fromTo(
+          "#step2-cardgroup",
+          { y: 46, scale: 0.97, autoAlpha: 0 },
+          {
+            y: 0,
+            scale: 1,
+            autoAlpha: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            transformOrigin: "50% 60%",
+          },
+          0.28,
+        );
+
+        /* ---------------------------------------------------------------
+         * Scene 2 (1.6–4.8s) — discrete-text-sequence type-on with the
+         * human backspace-and-retype edit ("collects" -> "shares").
+         * Pure threshold lookup: same t -> same pixels (seek-safe).
+         * ------------------------------------------------------------- */
+        const TYPED = [
+          { t: 0.0, text: "" },
+          { t: 1.7, text: "M" },
+          { t: 1.78, text: "Ma" },
+          { t: 1.85, text: "Make" },
+          { t: 1.95, text: "Make a" },
+          { t: 2.03, text: "Make an" },
+          { t: 2.12, text: "Make an a" },
+          { t: 2.19, text: "Make an app" },
+          { t: 2.33, text: "Make an app f" },
+          { t: 2.41, text: "Make an app for" },
+          { t: 2.5, text: "Make an app for m" },
+          { t: 2.57, text: "Make an app for my" },
+          { t: 2.68, text: "Make an app for my cl" },
+          { t: 2.76, text: "Make an app for my cla" },
+          { t: 2.84, text: "Make an app for my class" },
+          { t: 2.98, text: "Make an app for my class th" },
+          { t: 3.06, text: "Make an app for my class that" },
+          { t: 3.2, text: "Make an app for my class that co" },
+          { t: 3.28, text: "Make an app for my class that coll" },
+          { t: 3.36, text: "Make an app for my class that collec" },
+          { t: 3.44, text: "Make an app for my class that collects" },
+          /* thinking pause — realizes the wrong word */
+          { t: 3.8, text: "Make an app for my class that collect" },
+          { t: 3.87, text: "Make an app for my class that colle" },
+          { t: 3.93, text: "Make an app for my class that col" },
+          { t: 3.99, text: "Make an app for my class that c" },
+          { t: 4.05, text: "Make an app for my class that " },
+          /* retype the better word, then keep going */
+          { t: 4.16, text: "Make an app for my class that sh" },
+          { t: 4.23, text: "Make an app for my class that shar" },
+          { t: 4.3, text: "Make an app for my class that shares" },
+          { t: 4.42, text: "Make an app for my class that shares l" },
+          { t: 4.49, text: "Make an app for my class that shares lun" },
+          { t: 4.55, text: "Make an app for my class that shares lunch" },
+          { t: 4.66, text: "Make an app for my class that shares lunch or" },
+          { t: 4.72, text: "Make an app for my class that shares lunch orde" },
+          { t: 4.78, text: "Make an app for my class that shares lunch orders" },
+          { t: 4.88, text: "Make an app for my class that shares lunch orders…" },
+        ];
+
+        const GRACE = 0.24; /* caret stays solid while keystrokes land */
+        const BLINK_CYCLES = 12; /* whole number over DUR -> ~0.68s period */
+        const PINK_T = 7.42; /* Scene 4 — caret snaps to pink */
+        const PINK = "#fe90e8";
+        const BLACK = "#000000";
+
+        function stateAt(t) {
+          for (let i = TYPED.length - 1; i >= 0; i--) {
+            if (t >= TYPED[i].t) return TYPED[i];
+          }
+          return TYPED[0];
+        }
+
+        const textEl = document.getElementById("step2-text");
+        const caretEl = document.getElementById("step2-caret");
+
+        /* Guards avoid per-frame DOM thrash; every value is recomputed
+           purely from driver.t, so out-of-order seeks stay correct. */
+        let lastText = null;
+        let lastColor = null;
+        let lastOp = null;
+
+        const driver = { t: 0 };
+        tl.to(
+          driver,
+          {
+            t: DUR,
+            duration: DUR,
+            ease: "none",
+            onUpdate: () => {
+              const t = driver.t;
+              const entry = stateAt(t);
+              if (entry.text !== lastText) {
+                textEl.textContent = entry.text;
+                lastText = entry.text;
+              }
+
+              /* context-sensitive caret: black while writing, pink on
+                 "no magic words needed" (Scene 4) */
+              const color = t >= PINK_T ? PINK : BLACK;
+              if (color !== lastColor) {
+                caretEl.style.background = color;
+                lastColor = color;
+              }
+
+              /* deterministic sin blink; solid during active typing and
+                 for one beat at the pink snap so the snap is visible */
+              const typing = entry.text !== "" && t - entry.t < GRACE && t < 5.2;
+              const snapFlash = t >= PINK_T && t < PINK_T + 0.32;
+              const phase = (t / DUR) * BLINK_CYCLES * Math.PI * 2;
+              const op =
+                typing || snapFlash ? "1" : Math.sin(phase) > 0 ? "1" : "0";
+              if (op !== lastOp) {
+                caretEl.style.opacity = op;
+                lastOp = op;
+              }
+            },
+          },
+          0,
+        );
+
+        /* ---------------------------------------------------------------
+         * Scene 3 (4.8–7.4s) — three checklist chips mask-wipe in under
+         * the card, one per spoken cue. No bounce — power3 settles.
+         * ------------------------------------------------------------- */
+        const CHIP_T = [4.95, 5.75, 6.45];
+        ["#step2-chipmask-1", "#step2-chipmask-2", "#step2-chipmask-3"].forEach(
+          (sel, i) => {
+            tl.fromTo(
+              sel,
+              { clipPath: "inset(0% 100% 0% 0%)", x: -26 },
+              {
+                clipPath: "inset(0% 0% 0% 0%)",
+                x: 0,
+                duration: 0.55,
+                ease: "power3.out",
+              },
+              CHIP_T[i],
+            );
+          },
+        );
+
+        /* Scene 4 (7.4–8.2s) — caret snaps pink (handled in the driver);
+           everything holds. No exit — the root transition is the exit. */
+
+        window.__timelines["04-step2-describe"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

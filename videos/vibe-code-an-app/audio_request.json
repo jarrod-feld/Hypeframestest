@@ -1,0 +1,105 @@
+{
+  "lines": [
+    {
+      "id": "01",
+      "sfx": [
+        "whoosh",
+        "pop"
+      ]
+    },
+    {
+      "id": "02",
+      "sfx": [
+        "pop",
+        "tick"
+      ]
+    },
+    {
+      "id": "03",
+      "sfx": [
+        "tick",
+        "pop"
+      ]
+    },
+    {
+      "id": "04",
+      "sfx": [
+        "keyboard",
+        "tick"
+      ]
+    },
+    {
+      "id": "05",
+      "sfx": [
+        "pop",
+        "thunk",
+        "chime"
+      ]
+    },
+    {
+      "id": "06",
+      "sfx": [
+        "tick",
+        "whoosh"
+      ]
+    },
+    {
+      "id": "07",
+      "sfx": [
+        "click",
+        "pop",
+        "chime"
+      ]
+    },
+    {
+      "id": "08",
+      "sfx": [
+        "wind",
+        "thud"
+      ]
+    },
+    {
+      "id": "09",
+      "sfx": [
+        "pop",
+        "tick"
+      ]
+    },
+    {
+      "id": "10",
+      "sfx": [
+        "tick",
+        "coin",
+        "pop"
+      ]
+    },
+    {
+      "id": "11",
+      "sfx": [
+        "thunk",
+        "thunk",
+        "pop"
+      ]
+    },
+    {
+      "id": "12",
+      "sfx": [
+        "stamp",
+        "stamp",
+        "stamp",
+        "stamp",
+        "stamp"
+      ]
+    },
+    {
+      "id": "13",
+      "sfx": [
+        "pop",
+        "chime"
+      ]
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  }
+}

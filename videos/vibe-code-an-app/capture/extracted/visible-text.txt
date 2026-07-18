@@ -1,0 +1,37 @@
+TOPIC: How to use a vibe coding tool to build an app end to end — explained so simply a five-year-old could follow it.
+
+USER'S ASK (verbatim, cleaned of filler): "Make a two minute video on how exactly to use a vibe coding tool and build an app end to end — how to select the tech stack, how to market with paid ads, what your marketing strategy should be, whether you should use paid ads or whatever — the full thing. Basically I should be able to teach a five year old how to do this."
+
+SOURCE NOTES — the information the video teaches:
+
+1) WHAT IS VIBE CODING
+- Vibe coding = building software by describing what you want in plain language and letting an AI coding tool write the actual code. You talk, it types.
+- Tools in this family: Claude Code, Cursor, Lovable, Bolt, Replit, v0. The video should stay tool-agnostic ("a vibe coding tool") so it doesn't date itself.
+- The loop: describe → the AI builds → you look at it → you say what to change → repeat. Like ordering food and sending it back until it's perfect, except the chef never gets annoyed.
+
+2) STEP-BY-STEP: BUILD AN APP END TO END
+- Step 1: Pick ONE small problem you or a friend actually has. One sentence: "An app that ___." Small beats big; a lemonade stand beats a shopping mall on day one.
+- Step 2: Tell the tool what you want in plain words, like you'd tell a friend. Say who it's for, what it does, what a screen should show. No code words needed.
+- Step 3: TECH STACK selection — ELI5: the tech stack is the box of LEGO bricks the app is built from. The secret grown-ups don't tell you: for your first app, you don't choose — you take the boring default recipe and let the AI wire it up:
+  * A popular web framework for the screens people see (e.g. Next.js / React) — popular matters because the AI has seen millions of examples of it, so it makes fewer mistakes.
+  * A hosted database + login service for remembering things and knowing who's who (e.g. Supabase/Postgres).
+  * A one-click hosting service to put it on the internet (e.g. Vercel).
+  * Rule of thumb: boring and popular > shiny and clever. Choose the bricks everyone uses, not the fancy ones. You can always rebuild later once real people use it.
+- Step 4: The build loop — look at what the AI made, click around, tell it what's wrong or ugly, let it fix. Repeat until a stranger could use it without you explaining.
+- Step 5: LAUNCH = one click deploy. Deploying is just moving your app from your computer to a computer that never sleeps, so anyone in the world can visit your link. It is not scary; it's "File → Save" for the internet.
+
+3) MARKETING STRATEGY (the honest ELI5 version)
+- An app nobody knows about is a lemonade stand in the middle of the desert. Building it is half the job; telling people is the other half.
+- Order of operations:
+  a. START FREE (organic): tell the people who already have the problem. Post where they already hang out — the exact subreddit, Discord, TikTok, school group chat. Show the app doing the thing, don't just say "I made an app." Do this before spending a single dollar.
+  b. THEN TEST PAID ADS — but only after two things are true: (1) strangers who try the app stick around (some retention), and (2) you know the one sentence that makes people click.
+  * Paid ads ELI5: you pay a big app (Meta/Instagram, TikTok, Google) to show your picture/video to people who might care. It's paying the school announcer to tell everyone about your lemonade stand.
+  * Start tiny: think $5–10 a day, a handful of different pictures/videos (creatives). Ads are experiments, not vending machines.
+  * The one number that decides everything: does a customer bring in more than it cost the ad to get them? (CAC vs LTV, said simply: "if a kid pays you $3 in lemonade but the flyer to find that kid cost $5, you're losing money — make the flyer cheaper or the lemonade better.")
+  * Kill the losing ads, feed the winning ones. Repeat.
+- So: paid ads or not? Answer: organic first, always. Paid ads are gasoline — great on a fire that's already burning, useless on wet wood (an app nobody retains).
+
+4) CLOSE / CTA
+- The whole journey: say it → the AI builds it → click launch → tell people → pour a little ad money on what already works.
+- You don't need to be a programmer anymore; you need to be someone who notices problems and can describe them clearly.
+- CTA energy: "Your move — go describe your first app today."
